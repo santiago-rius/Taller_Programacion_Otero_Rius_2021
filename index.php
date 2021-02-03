@@ -2,6 +2,8 @@
 
 <html>
 
+    <link rel="icon" href="./img/logito_invertido.png" type="image/gif" sizes="16x16">
+    
     <head>
         <meta charset="UTF-8" lang="es">
         <meta name="description" content="esto es una pagina web re loca">
