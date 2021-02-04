@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 
+<?php
+require_once 'datos.php';
+?>
+
 <html>
 
     <link rel="icon" href="./img/logito_invertido.png" type="image/gif" sizes="16x16">
@@ -21,19 +25,30 @@
         </div>
         <div id="menu">
             <a href="#">Página principal</a>
-            <a target="_blank" href="./login.html">Inicio de sesión</a>
-            <a target="_blank" href="./login.html">Registro</a>
+            <?php
+            session_start(); //si ya hay una sesion iniciada no cambia el id
+            if (isset($_SESSION['usuarioLogueado'])) {
+                $usuario = $_SESSION['usuarioLogueado'];
+                echo('Hola, ' . $usuario["nombre"] . '<a target="_self" href="./doLogout.php">Cerrar sesión</a>');
+            } else {
+                echo('<a target="_self" href="./login.php">Inicio de sesión</a>'
+                        . '<a target="_blank" href="./login.html">Registro</a>');
+            }
+            ?>
             <a href="#">Contacto</a>
         </div>
         <div id="categorias">
             <h2>Categorías</h2>
             <ul class="lista_lateral">
-                <li><a href="#">FPS</a></li>
-                <li><a href="#">RPG</a></li>
-                <li><a href="#">RTS</a></li>
-                <li><a href="#">Casual</a></li>
-                <li><a href="#">Racing</a></li>
-                <li><a href="#">Sports</a></li>
+                <?php
+                foreach (getCategorias() as $categoria) {
+                    echo('<li><a href="index.php?catId=' .
+                    $categoria["id"]
+                    . '">' .
+                    $categoria["nombre"] .
+                    '</a></li>');
+                }
+                ?>
             </ul>
         </div>
         <div id="buscador">
@@ -42,31 +57,41 @@
             <input type="button" id="boton_buscar" value="Buscar">
         </div>
         <div id="juegos">
-            <h3>Juegos Registrados</h3>
-            <div class="juego">
-                <img src="./img/OW_cover.jpg" alt="cover" width="100px"> <!--sacar para el css-->
-                <span class="nombre-producto">Overwatch</span>
-                <p>"Best game ever" -elrubius</p>
-                <span class="precio-producto">U$S 10</span>
-            </div>
-            <div class="juego">
-                <img src="./img/OW_cover.jpg" alt="cover" width="100px"> <!--sacar para el css-->
-                <span class="nombre-producto">Overwatch</span>
-                <p>"Best game ever" -elrubius</p>
-                <span class="precio-producto">U$S 15</span>
-            </div>
-            <div class="juego">
-                <img src="./img/OW_cover.jpg" alt="cover" width="100px"> <!--sacar para el css-->
-                <span class="nombre-producto">Overwatch</span>
-                <p>"Best game ever" -elrubius</p>
-                <span class="precio-producto">U$S 20</span>
-            </div>
-            <div class="juego">
-                <img src="./img/OW_cover.jpg" alt="cover" width="100px"> <!--sacar para el css-->
-                <span class="nombre-producto">Overwatch</span>
-                <p>"Best game ever" -elrubius</p>
-                <span class="precio-producto">U$S 25</span>
-            </div>
+            <h3>
+                <?php
+                
+                $catId = 1;
+                
+                if (isset($_GET['catId'])) {
+                    $catId = $_GET['catId'];
+                } else if (isset($_COOKIE['ultimaCategoria'])) {
+                    $catId = $_COOKIE['ultimaCategoria'];
+                }
+                
+                $categoria = getCategoria($catId);
+                
+                if (isset($categoria)) {
+                    setCookie('ultimaCategoria', $catId ,time() + (60 * 60 * 24));
+                    echo $categoria["nombre"];
+                } else {
+                    echo "Categoria inexistente";
+                }
+                ?>
+            </h3>
+            <?php
+            foreach (getProductosDeCategoria($catId) as $producto) {
+                echo('<div class="juego">');
+                echo('<img src="img/' . $producto["imagen"] . '" />');
+                echo('<a href="juego.php?id=' .
+                $producto["id"] . '"');
+                echo('<span class="nombre-producto">' .
+                $producto["nombre"] . '</span></a>');
+                echo('<p>' . $producto["descripcion"] . '</p>');
+                echo('<span class="precio-producto">' . 'U$S '.
+                $producto["precio"] . '</span>');
+                echo('</div>');
+            }
+            ?>
         </div>
     </body>
 
