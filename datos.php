@@ -1,4 +1,6 @@
+
 <?php
+require_once("./libs/Smarty.class.php");
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -96,4 +98,15 @@ function login($usuario, $clave) {
 function logout() {
     unset($_SESSION['usuario']);
     session_destroy();
+}
+
+function getSmarty(){
+        $mySmarty = new Smarty();
+        $mySmarty->template_dir = 'Templates';
+        $mySmarty->compile_dir = 'Templates_c';
+        $mySmarty->config_dir = 'Config';
+        $mySmarty->cache_dir = 'Cache';
+
+    return $mySmarty;
+
 }
