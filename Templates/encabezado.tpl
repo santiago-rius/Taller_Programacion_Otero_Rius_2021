@@ -15,13 +15,13 @@
     <body>
         <div class="contenedor" id="encabezado">
             <header>
-                <h1>Belugabi Gamez</h1>
+                <h1>Obligatorio Taller de programación</h1>
                 <img src="./img/logito.png" alt="logo">
                 <h3>El mejor sitio de juegos pero es solo overwatch</h3>
             </header>
         </div>
     </body>
-</html>    
+</html>
   
         
    

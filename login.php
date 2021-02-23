@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+    ini_set('display_errors, 1');
     require_once 'datos.php';
 ?>
 <!--incluir para que al cambiar de categoria actually cambie-->

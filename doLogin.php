@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php
+
+    ini_set('display_errors, 1');
     require_once 'datos.php';
     
     $usuario = $_POST["usuario"];
@@ -14,4 +16,3 @@
     }else{
         header('location:login.php?err=1');
     }
-?>

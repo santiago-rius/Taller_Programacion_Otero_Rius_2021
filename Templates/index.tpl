@@ -8,7 +8,6 @@
         <meta name="description" content="esto es una pagina web re loca">
         <title>TBD</title>
         <link rel="stylesheet" href="./css/estilo.css">
-
     </head>
  
     <body>
@@ -16,10 +15,12 @@
         <div id="menu">
             <a href="#">Página principal</a>
             {if ($usuarioLogueado)} 
-                Hola, {$usuarioLogeado["nombre"]} <a target="_self" href="./doLogout.php">Cerrar sesión</a>
+                Hola, {$usuarioLogueado.nombre}<a target="_self" href="./doLogout.php">Cerrar sesión</a>
+                <a href="./nuevaCategoria.php">Nueva Categoría</a>
             {else}
                 <a target="_self" href="./login.php">Inicio de sesión</a>
-                        <a target="_blank" href="./login.html">Registro</a>
+                <a target="_blank" href="./login.html">Registro</a>
+                <a href="./nuevaCategoria.php">Nueva Categoría</a>
             {/if}
            
             <a href="#">Contacto</a>
@@ -28,10 +29,7 @@
             <h2>Categorías</h2>
             <ul class="lista_lateral">
                 {foreach from = $categorias item=cat} 
-                    <li><a href="index.php?catId=
-                    {$cat.id}" >
-                    {$cat.nombre}
-                    </a></li>
+                    <li><a href="index.php?catId={$cat.id}">{$cat.nombre}</a></li>
                 {/foreach}
             </ul>
         </div>
@@ -43,10 +41,10 @@
         <div id="juegos">
                 {if isset($categoria)}
                     <h3>
-                        {$categoria.nombre}
+                        {$categoria.id}{$categoria.nombre} <!-- print de control!!! -->
                     </h3>
-                    {foreach from=$juego item=jueg}
-                        {include file="tarjeta_juegos.tpl" jueg=$jueg}                        
+                    {foreach from=$juegos item=jueg}
+                        {include file="tarjeta_juego.tpl" jueg=$jueg}                        
                     {/foreach}
                 {else}    
                     <h3> Categoría Inexistente</h3>

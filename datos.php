@@ -1,33 +1,57 @@
 
 <?php
+
+ini_set('display_errors, 1');
 require_once("./libs/Smarty.class.php");
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 function getCategorias() {
-    $categorias = array(
-        array("id" => 1, "nombre" => "FPS"), 
-        array("id" => 2, "nombre" => "RPG"), 
-        array("id" => 3, "nombre" => "RTS"), 
-        array("id" => 4, "nombre" => "Casual"), 
-        array("id" => 5, "nombre" => "Racing"), 
-        array("id" => 6, "nombre" => "Sports")
-    );
-    return $categorias;
+    $conexion = abrirConexion2();
+    
+    $sql = "SELECT * FROM categorias";
+    $conexion->consulta($sql);
+    
+    return $conexion->restantesRegistros();
+}
+
+function abrirConexion() {
+    $usuario = "root";
+    $clave="root";
+    
+    $conexion = new PDO("mysql:host=localhost;dbname=catalogo_juegos", $usuario, $clave);
+    
+    return $conexion;
 }
 
 function getCategoria($id){
-    $categoria = NULL;
-    foreach (getCategorias() as $aux) {
-        if ($aux["id"] == $id) {
-            $categoria = $aux;
-        }
-    }
+    echo($id);
+    $conexion = abrirConexion();
+    $sql = "SELECT * FROM generos WHERE id = :id";
+    $sentencia = $conexion->prepare($sql);
+    $sentencia->bindParam("id", $id, PDO::PARAM_INT);
+    $sentencia->execute();
+    $categoria = $sentencia->fetch(PDO::FETCH_ASSOC);
+    
     return $categoria;
+}
+
+function abrirConexion2() {
+    $usuario = "root";
+    $clave="root";
+    
+    $conexion = new PDO("mysql:host=localhost;dbname=catalogo_juegos", $usuario, $clave);
+    
+    $conexion->conectar();
+    
+    return $conexion;
+}
+
+function guardarCategoria($nombre) {
+    $conexion = abrirConexion();
+    $sql = "INSERT INTO generos(nombre)VALUES(:nombre)";
+    $sentencia = $conexion->prepare($sql);
+    $sentencia->bindParam("nombre", $nombre, PDO::PARAM_STR);
+    $sentencia->execute();
 }
 
 function getProductosDeCategoria($idCategoria) {
