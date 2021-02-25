@@ -1,4 +1,3 @@
-
 <?php
 
 ini_set('display_errors, 1');
@@ -6,17 +5,16 @@ require_once("./libs/Smarty.class.php");
 
 
 function getCategorias() {
-    $conexion = abrirConexion2();
-    
-    $sql = "SELECT * FROM categorias";
-    $conexion->consulta($sql);
-    
-    return $conexion->restantesRegistros();
+    $conexion = abrirConexion();
+    $sql = "SELECT * FROM generos";
+    $resultado = $conexion->query($sql);
+    $categorias = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    return $categorias;
 }
 
 function abrirConexion() {
     $usuario = "root";
-    $clave="root";
+    $clave = "root";
     
     $conexion = new PDO("mysql:host=localhost;dbname=catalogo_juegos", $usuario, $clave);
     
@@ -24,7 +22,6 @@ function abrirConexion() {
 }
 
 function getCategoria($id){
-    echo($id);
     $conexion = abrirConexion();
     $sql = "SELECT * FROM generos WHERE id = :id";
     $sentencia = $conexion->prepare($sql);
@@ -35,16 +32,6 @@ function getCategoria($id){
     return $categoria;
 }
 
-function abrirConexion2() {
-    $usuario = "root";
-    $clave="root";
-    
-    $conexion = new PDO("mysql:host=localhost;dbname=catalogo_juegos", $usuario, $clave);
-    
-    $conexion->conectar();
-    
-    return $conexion;
-}
 
 function guardarCategoria($nombre) {
     $conexion = abrirConexion();
@@ -133,4 +120,14 @@ function getSmarty(){
 
     return $mySmarty;
 
+}
+
+function guardarJuego($nombre)
+{
+    $conexion = abrirConexion();
+    
+    $sql = "INSERT INTO juegos(:nombre, :id_genero, :poster, :puntuacion, :fecha_lanzamiento, :empresa, :visualizaciones, :url_video, :resumen) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10])";
+    
+    //$sentencia = $conexion->prepare($sql);
+    
 }

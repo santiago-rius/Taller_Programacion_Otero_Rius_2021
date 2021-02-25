@@ -16,11 +16,10 @@
             <a href="#">Página principal</a>
             {if ($usuarioLogueado)} 
                 Hola, {$usuarioLogueado.nombre}<a target="_self" href="./doLogout.php">Cerrar sesión</a>
-                <a href="./nuevaCategoria.php">Nueva Categoría</a>
+                <a href="./nuevoJuego.php">Nuevo Juego</a>
             {else}
                 <a target="_self" href="./login.php">Inicio de sesión</a>
                 <a target="_blank" href="./login.html">Registro</a>
-                <a href="./nuevaCategoria.php">Nueva Categoría</a>
             {/if}
            
             <a href="#">Contacto</a>
@@ -41,7 +40,7 @@
         <div id="juegos">
                 {if isset($categoria)}
                     <h3>
-                        {$categoria.id}{$categoria.nombre} <!-- print de control!!! -->
+                        {$categoria.nombre}
                     </h3>
                     {foreach from=$juegos item=jueg}
                         {include file="tarjeta_juego.tpl" jueg=$jueg}                        

@@ -84,3 +84,12 @@ ul{
     float: right;
     font-weight: bold;
 }
+
+#ingresoJuego input{
+   margin: 10px; 
+}
+
+#divIngresoJuego{
+    text-align: center;
+    margin-top: 3%;
+}
