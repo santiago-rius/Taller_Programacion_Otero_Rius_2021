@@ -1,5 +1,18 @@
 <?php
     require_once 'datos.php';
-    $mySmarty = getSmarty();
-    $mySmarty->display('nuevo_juego.tpl');
-
+    ini_set('display_errors, 1');
+    require_once 'datos.php';
+    session_start();
+    
+    
+    $usuarioLogueado = NULL;
+    if(isset($_SESSION['usuarioLogueado'])) {
+        $usuarioLogueado = $_SESSION['usuarioLogueado'];
+    }
+    
+    $categorias = getCategorias();
+        
+        $mySmarty = getSmarty();
+        $mySmarty->assign("categorias", $categorias);
+        $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
+        $mySmarty->display('nuevo_juego.tpl');

@@ -6,14 +6,28 @@ body{
     font-family: 'Montserrat', 'sans-serif';
 }
 
+#page-container {
+  position: relative;
+}
+
+.contenedor {
+    min-height: 100vh;
+    position: relative;
+}
+
 ul{
     list-style-type: none;
+}
+
+#encabezado{
+    position: relative;
+    top:0;
 }
 
 #encabezado img{
     height: 100px;
     position: absolute;
-    top: 2%;
+    top: 0;
     left: 1%;
 }
 
@@ -22,18 +36,20 @@ ul{
     text-align: center;
 }
 
+#encabezado a{
+    color: black;
+    text-decoration: underline;
+}
+
 #encabezado h3{
     font-style: italic;
     text-align: center;
 }
 
-#categorias{
-    position: fixed;
-    padding: 2%;
-    max-width: 20%;
-    background: rgb(216, 216, 216);
-    color: rgb(0, 0, 0);
-    border-bottom-right-radius: 40px;  
+#inicioDeSesion{
+    position: absolute;
+    top: 1%;
+    right: 1%;
 }
 
 #menu{
@@ -42,14 +58,24 @@ ul{
     width: 100%;
     background: rgb(119, 212, 255);
     color: white;
-    padding: 10px;
-    border-top-left-radius: 40px;  
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top-left-radius: 40px; 
+    color:black;
+}
+
+#menu li{
+    list-style-type: none;
 }
 
 #menu a{
     padding-left: 50px;
     padding-right: 50px;
+    color:black;
+    text-decoration: none;
 }
+
+#menu a:hover {color: white;}
 
 #buscador{
     position: static;
@@ -62,22 +88,46 @@ ul{
     width: 70%;
 }
 
-#juegos img {
+.juego img {
     float: left;
     width: 100px;
 }
 
 .juego {
-    float: left;
+    display: inline-block;
+    vertical-align: top;
     width: 250px;
     border: 1px solid #CCCCCC;
-    margin: 2px;
+    margin: 6px;
     padding: 10px;
+    border-radius: 30px;
+}
+
+#juego-destacado{
+    position: fixed;
+    margin-left: 1%;
+}
+
+#juego-destacado h3{
+    text-align: center;
+}
+
+#juego-destacado .juego{
+    min-width: 25%;
+    border: 1px solid red;
+}
+
+#juego-destacado .juego img{
+}
+
+.juego a{
+    color:black;
+    text-decoration: none;
 }
 
 .nombre-producto {
     font-style: italic;
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .precio-producto {
@@ -92,4 +142,142 @@ ul{
 #divIngresoJuego{
     text-align: center;
     margin-top: 3%;
+}
+
+.dropbtn {
+  background-color: rgb(119, 212, 255);
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  font-family: 'Montserrat', 'sans-serif';
+  border: none;
+  outline: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(119, 212, 255);
+  min-width: 160px;
+  box-shadow: 1px 8px 16px 3px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: rgb(70, 194, 251);}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: rgb(119, 212, 255); color: white;}
+
+.container img
+{
+    height: 50px;
+    top: 2%;
+    left: 1%;
+    
+}
+
+.footer-container{
+    position: relative;
+    clear: both;
+    height:170px;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #adadad;
+    border-bottom-right-radius: 40px;
+    padding-top: 2%;
+}
+
+.footer-links{
+    padding: 0;
+}
+
+.footer-links li{
+    display: inline-block; /* elementos de la lista en horizontal */
+}
+
+.footer-links li a{
+    color: black;
+    font-size: .8em;
+}
+
+#pagina-juego{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#pagina-juego img{
+    top: 0;
+    position: relative;
+}
+
+#media{
+    text-align: right;
+}
+
+#mensaje-error{
+    color:red;
+}
+
+#background{
+    background-image: linear-gradient(rgb(119, 212, 255), white);
+}
+
+#login{
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-top: 50px;
+    min-height: 60%;
+    border: 1px solid #CCCCCC;
+    border-color: black;
+    background: white;
+    position: absolute;
+    min-width: 20%;
+    text-align: center;
+    border-radius: 40px;
+}
+
+#login form{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10%;
+}
+
+
+#login table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#login table td{
+    padding: 15px;
+}
+
+#boton-ingresar{
+    display: inline-block;
+    border-radius: 4px;
+    background-color: rgb(255, 102, 237);
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 90%;
+    cursor: pointer;
+    margin-top: 60%;
 }

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 
 <div class="juego">
+    <a href="juego.php?id={$jueg.id}">
     <img src="img/{$jueg.imagen}" />
-    <a href="juego.php?id=
-    {$jueg.id}">
     <span class="nombre-producto">
-    {$jueg.nombre} </span></a>
+    {$jueg.nombre} </span>
     <p> {$jueg.descripcion}</p>
-    <span class="precio-producto"> U$S 
-        {$jueg.precio} </span>
+    <span class="precio-producto"> U$S {$jueg.precio} </span>
+    </a>
 </div>

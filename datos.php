@@ -46,7 +46,7 @@ function getProductosDeCategoria($idCategoria) {
     if ($idCategoria == 1) {
         $juegos[] = array("id" => 1,
             "nombre" => "Overwatch",
-            "descripcion" => "FPS buenardo",
+            "descripcion" => "Overwatch is an online team-based game generally played as a first-person shooter. ... These modes generally are centered around sequentially securing control of points on the map, or escorting a payload between points on the map, with one team attacking while the other defends.",
             "precio" => "19",
             "imagen" => "OW_cover.jpg");
         $juegos[] = array("id" => 2,
