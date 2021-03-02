@@ -11,20 +11,22 @@
         {include file = "encabezado.tpl"}
         <div class="contenedor">
             <div id="divIngresoJuego">
-                <form action="doGuardarJuego.php" method="POST" id="ingresoJuego">
+                <form action="doGuardarJuego.php" method="POST" id="ingresoJuego" enctype="multipart/form-data">
                     Nombre:
                     <input type="text" name="nombre" /><br>
                     Descripción:
                     <input type="text" name="descripcion" /><br>
                     Fecha de lanzamiento:
                     <input type="date" name="fechaLanzamiento"/><br>
-                    Imagen:
-                    <input type="file" name="imagen" accept="image/x-png,image/gif,image/jpeg" /> <br>
+                     Imagen:
+                    <input type="url" name="imagen" pattern="https?://(www.)?[-a-zA-Z0-9@:%.+~#=] { 2,256 } .[a-z] { 2,4 } \b([-a-zA-Z0-9@:%+.~#?&//=]*)(.jpg|.png|.gif)"/> <br>
                     Desarrollador:
                     <input type="text" name="desarrollador" /><br>
                     Lista de consolas para las que está disponible: <br>
-                    PC: <input type="checkbox" name="consolaPC"><br>
-                    PS5: <input type="checkbox" name="consolaPS5"><br>
+                        <select multiple name="consolas">
+                            <option value="PS5">PS5</option>
+                            <option value="PC">PC</option>
+                        </select> <br>
                     Género:
                     <input list="generos" name="generos">
                         <datalist id="generos">
@@ -33,7 +35,7 @@
                         {/foreach}
                         </datalist> <br>
                     URL del trailer:
-                    <input type="url" name="urlVideo" /><br>
+                    <input type="url" name="trailer"/><br>
                     <input type="submit" value="Guardar" />
                 </form>
             </div>

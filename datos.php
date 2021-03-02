@@ -122,12 +122,25 @@ function getSmarty(){
 
 }
 
-function guardarJuego($nombre)
+function guardarJuego($nombre, $descripcion, $fechaLanzamiento, $imagen, $desarrollador,
+                        $consolas, $generos, $trailer)
 {
     $conexion = abrirConexion();
     
-    $sql = "INSERT INTO juegos(:nombre, :id_genero, :poster, :puntuacion, :fecha_lanzamiento, :empresa, :visualizaciones, :url_video, :resumen) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10])";
+// $sql = "INSERT INTO juegos(:nombre, :id_genero, :poster, :puntuacion, :fecha_lanzamiento, :empresa, :visualizaciones, :url_video, :resumen) "
+   //         . "VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10])";
     
+    $sql = "INSERT INTO juegos(nombre, id_genero, poster, fecha_lanzamiento, empresa, url_video, resumen) "
+            . "VALUES (:nombre, :generos, :imagen, :fechaLanzamiento, :desarrollador, :trailer, :descripcion)";
+    $conexion->consulta($sql, 
+            array("nombre", $nombre, "string"),
+            array("id_genero", $generos, "int"),
+            array("poster", $imagen, "string"),
+            array("fecha_lanzamiento", $fechaLanzamiento, "date"),
+            array("empresa", $desarrollador, "string"),
+            array("url_video", $trailer, "string"),
+            array("resumen", $descripcion, "string"));
+    return $conexion->ultimoIdInsert();
     //$sentencia = $conexion->prepare($sql);
     
 }
