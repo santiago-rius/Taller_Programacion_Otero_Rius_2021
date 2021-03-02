@@ -24,14 +24,15 @@
                     <input type="text" name="desarrollador" /><br>
                     Lista de consolas para las que está disponible: <br>
                         <select multiple name="consolas">
-                            <option value="PS5">PS5</option>
-                            <option value="PC">PC</option>
+                            {foreach from = $consolas item=con}
+                                <option value={$con.id}>{$con.nombre}</option>
+                            {/foreach}
                         </select> <br>
                     Género:
                     <input list="generos" name="generos">
                         <datalist id="generos">
                         {foreach from = $categorias item=cat}
-                            <option value={$cat.nombre}>
+                            <option value={$cat.id}>{$cat.nombre}</option>
                         {/foreach}
                         </datalist> <br>
                     URL del trailer:

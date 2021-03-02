@@ -27,7 +27,7 @@ require_once 'datos.php';
         setCookie('ultimaCategoria', $catId, time() + (60*60*24));
     }
 
-$juegos = getProductosDeCategoria($catId);
+    $juegos = getProductosDeCategoria($catId);
 
     $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
     $mySmarty->assign("categorias", $categorias);

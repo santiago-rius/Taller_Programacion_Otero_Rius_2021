@@ -1,22 +1,28 @@
 <?php
-
+require_once 'class.Conexion.BD.php';
 ini_set('display_errors, 1');
 require_once("./libs/Smarty.class.php");
 
 
+
+    error_reporting(E_ERROR);
+
 function getCategorias() {
     $conexion = abrirConexion();
+    
     $sql = "SELECT * FROM generos";
-    $resultado = $conexion->query($sql);
-    $categorias = $resultado->fetchAll(PDO::FETCH_ASSOC);
-    return $categorias;
+    $conexion->consulta($sql);
+    
+     return $conexion->restantesRegistros();
 }
 
 function abrirConexion() {
     $usuario = "root";
-    $clave = "root";
+    $clave="root";
     
-    $conexion = new PDO("mysql:host=localhost;dbname=catalogo_juegos", $usuario, $clave);
+    $conexion = new ConexionBD("mysql", "localhost", "catalogo_juegos", $usuario, $clave);
+    
+    $conexion->conectar();
     
     return $conexion;
 }
@@ -24,12 +30,8 @@ function abrirConexion() {
 function getCategoria($id){
     $conexion = abrirConexion();
     $sql = "SELECT * FROM generos WHERE id = :id";
-    $sentencia = $conexion->prepare($sql);
-    $sentencia->bindParam("id", $id, PDO::PARAM_INT);
-    $sentencia->execute();
-    $categoria = $sentencia->fetch(PDO::FETCH_ASSOC);
-    
-    return $categoria;
+    $conexion->consulta($sql, array(array("id", $id, "int")));
+    return $conexion->siguienteRegistro();
 }
 
 
@@ -41,47 +43,77 @@ function guardarCategoria($nombre) {
     $sentencia->execute();
 }
 
-function getProductosDeCategoria($idCategoria) {
-    $juegos = array();
-    if ($idCategoria == 1) {
-        $juegos[] = array("id" => 1,
-            "nombre" => "Overwatch",
-            "descripcion" => "Overwatch is an online team-based game generally played as a first-person shooter. ... These modes generally are centered around sequentially securing control of points on the map, or escorting a payload between points on the map, with one team attacking while the other defends.",
-            "precio" => "19",
-            "imagen" => "OW_cover.jpg");
-        $juegos[] = array("id" => 2,
-            "nombre" => "Counter Strike",
-            "descripcion" => "Vas a ragequitear",
-            "precio" => "FREE",
-            "imagen" => "no_cover.jpg");
-        $juegos[] = array("id" => 3,
-            "nombre" => "Paladins",
-            "descripcion" => "Como el Overwatch pero para pobres",
-            "precio" => "FREE",
-            "imagen" => "no_cover.jpg");
-        $juegos[] = array("id" => 4,
-            "nombre" => "Call of Duty: Seoho Warfare",
-            "descripcion" => "You will become a Oneus Stan",
-            "precio" => "399",
-            "imagen" => "no_cover.jpg");
-    } else if ($idCategoria == 2) {
-        $juegos[] = array("id" => 5,
-            "nombre" => "The Elder Scrolls: Skyrim",
-            "descripcion" => "Lleno de bugs pero it just works",
-            "precio" => "15",
-            "imagen" => "no_cover.jpg");
-        $juegos[] = array("id" => 6,
-            "nombre" => "The Witcher 3: The wild hunt",
-            "descripcion" => "Best game ever 10/10",
-            "precio" => "15",
-            "imagen" => "no_cover.jpg");
-        $juegos[] = array("id" => 7,
-            "nombre" => "Cyberpunk 2077",
-            "descripcion" => "Not worth it, esta mas roto que el Skyrim (Judy is best romance btw)",
-            "precio" => "too much",
-            "imagen" => "no_cover.jpg");
-    }
-    return $juegos;
+function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '') {
+    $size = 3;
+    $offset = $pagina * $size;
+    $conexion = abrirConexion();
+    
+    $params = array(
+        array("idCategoria", $idCategoria, "int"),
+        array("texto", '%'.$texto.'%', "string"),
+        array("offset", $offset, "int"),
+        array("size", $size, "int")
+        );
+    
+    $sql = "SELECT * FROM juegos WHERE id = :idCategoria AND nombre LIKE :texto LIMIT :offset, :size";
+    $conexion->consulta($sql, $params);
+    return $conexion->restantesRegistros();
+//    $juegos = array();
+//    if ($idCategoria == 1) {
+//        $juegos[] = array("id" => 1,
+//            "nombre" => "Overwatch",
+//            "descripcion" => "Overwatch is an online team-based game generally played as a first-person shooter. ... These modes generally are centered around sequentially securing control of points on the map, or escorting a payload between points on the map, with one team attacking while the other defends.",
+//            "precio" => "19",
+//            "imagen" => "OW_cover.jpg");
+//        $juegos[] = array("id" => 2,
+//            "nombre" => "Counter Strike",
+//            "descripcion" => "Vas a ragequitear",
+//            "precio" => "FREE",
+//            "imagen" => "no_cover.jpg");
+//        $juegos[] = array("id" => 3,
+//            "nombre" => "Paladins",
+//            "descripcion" => "Como el Overwatch pero para pobres",
+//            "precio" => "FREE",
+//            "imagen" => "no_cover.jpg");
+//        $juegos[] = array("id" => 4,
+//            "nombre" => "Call of Duty: Seoho Warfare",
+//            "descripcion" => "You will become a Oneus Stan",
+//            "precio" => "399",
+//            "imagen" => "no_cover.jpg");
+//    } else if ($idCategoria == 2) {
+//        $juegos[] = array("id" => 5,
+//            "nombre" => "The Elder Scrolls: Skyrim",
+//            "descripcion" => "Lleno de bugs pero it just works",
+//            "precio" => "15",
+//            "imagen" => "no_cover.jpg");
+//        $juegos[] = array("id" => 6,
+//            "nombre" => "The Witcher 3: The wild hunt",
+//            "descripcion" => "Best game ever 10/10",
+//            "precio" => "15",
+//            "imagen" => "no_cover.jpg");
+//        $juegos[] = array("id" => 7,
+//            "nombre" => "Cyberpunk 2077",
+//            "descripcion" => "Not worth it, esta mas roto que el Skyrim (Judy is best romance btw)",
+//            "precio" => "too much",
+//            "imagen" => "no_cover.jpg");
+//    }
+//    return $juegos;
+}
+
+function ultimaPaginaProductos($catId, $texto) {
+     $conexion = abrirConexion2();
+    
+    $params = array(
+        array("idCategoria", $catId, "int"),
+        array("texto", '%'.$texto.'%', "string")
+        );
+    
+    $sql = "SELECT count(*) as total FROM juegos WHERE id = :idCategoria AND nombre LIKE :texto";
+    $conexion->consulta($sql, $params);
+    $size = 3;
+    $fila = $conexion->siguienteRegistro();
+    $pagina = ceil($fila["total"] / $size) - 1;
+    return $pagina;
 }
 
 function getProducto($id){
@@ -132,15 +164,27 @@ function guardarJuego($nombre, $descripcion, $fechaLanzamiento, $imagen, $desarr
     
     $sql = "INSERT INTO juegos(nombre, id_genero, poster, fecha_lanzamiento, empresa, url_video, resumen) "
             . "VALUES (:nombre, :generos, :imagen, :fechaLanzamiento, :desarrollador, :trailer, :descripcion)";
-    $conexion->consulta($sql, 
+    echo('prueba');
+    echo('holis <br>');
+echo($nombre.'<br>');
+echo($descripcion.'<br>');
+echo($fechaLanzamiento.'<br>');
+echo($imagen.'<br>');
+echo($generos.'<br>');
+echo($desarrollador.'<br>');
+echo($trailer.'<br>');
+echo($consolas.'<br>');
+echo($sql);
+    $conexion->consulta($sql, array(
             array("nombre", $nombre, "string"),
-            array("id_genero", $generos, "int"),
-            array("poster", $imagen, "string"),
-            array("fecha_lanzamiento", $fechaLanzamiento, "date"),
-            array("empresa", $desarrollador, "string"),
-            array("url_video", $trailer, "string"),
-            array("resumen", $descripcion, "string"));
-    return $conexion->ultimoIdInsert();
+            array("generos", $generos, "int"),
+            array("imagen", $imagen, "string"),
+            array("fechaLanzamiento", $fechaLanzamiento, "date"),
+            array("desarrollador", $desarrollador, "string"),
+            array("trailer", $trailer, "string"),
+            array("descripcion", $descripcion, "string")));
+    echo('<br>'.$conexion->ultimoError());
+    return ($conexion->ultimoIdInsert());
     //$sentencia = $conexion->prepare($sql);
     
 }
