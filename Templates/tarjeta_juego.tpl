@@ -2,10 +2,9 @@
 
 <div class="juego">
     <a href="juego.php?id={$jueg.id}">
-    <img src="img/{$jueg.imagen}" />
+        <img src={$jueg.poster} alt="Imagen" />
     <span class="nombre-producto">
     {$jueg.nombre} </span>
-    <p> {$jueg.descripcion}</p>
-    <span class="precio-producto"> U$S {$jueg.precio} </span>
+    <p> {$jueg.resumen}</p>
     </a>
 </div>

@@ -19,13 +19,12 @@
                 {if (isset($producto))}
                     <h1>{$producto.nombre}</h1>
                     <div class="media">
-                        <iframe width="600" height="390" src="https://www.youtube.com/embed/FqnKB22pOC0"></iframe>
-                        <img src="img/{$producto.imagen}"/>
+                        <img src={$producto.poster} alt="Imagen"/>
+                        <iframe width="600" height="390" src={$producto.url_video}></iframe>
                     </div>
-                    
-                    <p>{$producto.descripcion}</p>
-                    <label> Precio U$S {$producto.precio}</label>
-                    
+                    <p>{$producto.resumen}</p>
+                    <p>{$producto.empresa}</p>
+                    <p>{$producto.puntuacion}</p>  
                 {else}
                         <h1>Producto inexistente</h1>
                 {/if}

@@ -33,4 +33,4 @@ $mySmarty->assign("pagina", $pagina);
 $mySmarty->assign("categoria", $categoria);
 $mySmarty->assign("ultimaPagina", ultimaPaginaProductos($catId, $texto));
 $mySmarty->assign("productos", getProductosDeCategoria($catId, $pagina, $texto));
-$mySmarty->display("productos_paginados.tpl");
+$mySmarty->display("juegos_paginados.tpl");

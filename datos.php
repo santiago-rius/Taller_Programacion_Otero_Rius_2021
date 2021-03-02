@@ -55,7 +55,7 @@ function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '') {
         array("size", $size, "int")
         );
     
-    $sql = "SELECT * FROM juegos WHERE id = :idCategoria AND nombre LIKE :texto LIMIT :offset, :size";
+    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto LIMIT :offset, :size";
     $conexion->consulta($sql, $params);
     return $conexion->restantesRegistros();
 //    $juegos = array();
