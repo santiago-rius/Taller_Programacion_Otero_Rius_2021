@@ -9,6 +9,8 @@
         <title>TBD</title>
         <link rel="stylesheet" href="./css/estilo.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
     </head>
  
     <body>
@@ -18,26 +20,18 @@
 
                 <div id="buscador">
                     <label for="buscar">Ingresa tu búsqueda</label>
-                    <input type="text">
-                    <input type="button" id="boton_buscar" value="Buscar">
+                    <input type="text" id="texto">
+                    <input type="button" id="buscar" value="Buscar">
                 </div>
-                <div id="juego-destacado">
-                    <h3>Juego Destacado</h3>
-                    <h3>⭐⭐⭐⭐⭐</h3>
-                    {$juego = $juegos[0]}
-                    {include file="tarjeta_juego.tpl" jueg=$juego} 
-                </div>
+                    
+                    <div id="juego-destacado">
+                        {include file="juego_destacado.tpl" jueg=$juegoDestacado}
+                    </div>
                 <div id="juegos">
-                        {if isset($categoria)}
-                            <h3>
-                                {$categoria.nombre}
-                            </h3>
-                            {foreach from=$juegos item=jueg}
-                                {include file="tarjeta_juego.tpl" jueg=$jueg}
-                            {/foreach}
-                        {else}    
-                            <h3> Categoría Inexistente</h3>
-                        {/if}
+                    <h3>{$categoria.nombre}</h3>
+                    {foreach from=$juegos item=prod}
+                        {include file="tarjeta_juego.tpl" jueg=$jueg}
+                    {/foreach}
                 </div>
             </div>
             {include file = "footer.tpl"}

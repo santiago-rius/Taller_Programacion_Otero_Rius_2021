@@ -9,6 +9,8 @@
         <meta name="description" content="esto es una pagina web re loca">
         <title>TBD</title>
         <link rel="stylesheet" href="./css/estilo.css">
+        <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     </head>
 
@@ -17,7 +19,7 @@
             <header>
                 <h1><a href="index.php">Obligatorio Taller de programación</a></h1>
                 <a href="index.php"><img src="./img/logito.png" alt="logo"></a>
-                <h3>El mejor sitio de juegos pero es solo overwatch</h3>
+                <h3>El mejor sitio de juegos pero no anda (todavia)</h3>
                 <div id="inicioDeSesion">
                     {if ($usuarioLogueado)} 
                     Hola, {$usuarioLogueado.nombre}<a target="_self" href="./doLogout.php"><br>Cerrar sesión</a>
@@ -33,7 +35,7 @@
                         <button class="dropbtn">Categorías ▼</button>
                         <div class="dropdown-content">
                           {foreach from = $categorias item=cat}
-                            <li><a href="index.php?catId={$cat.id}">{$cat.nombre}</a></li>
+                            <li><a class="categoria" catId="{$catId}" href="#">{$cat.nombre}</a></li>
                         {/foreach}
                         </div>
                     </div>

@@ -44,7 +44,7 @@ function guardarCategoria($nombre) {
 }
 
 function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '') {
-    $size = 3;
+    $size = 8;
     $offset = $pagina * $size;
     $conexion = abrirConexion();
     
@@ -101,16 +101,16 @@ function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '') {
 }
 
 function ultimaPaginaProductos($catId, $texto) {
-     $conexion = abrirConexion2();
+    $conexion = abrirConexion();
     
     $params = array(
         array("idCategoria", $catId, "int"),
         array("texto", '%'.$texto.'%', "string")
         );
     
-    $sql = "SELECT count(*) as total FROM juegos WHERE id = :idCategoria AND nombre LIKE :texto";
+    $sql = "SELECT count(*) as total FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto";
     $conexion->consulta($sql, $params);
-    $size = 3;
+    $size = 8;
     $fila = $conexion->siguienteRegistro();
     $pagina = ceil($fila["total"] / $size) - 1;
     return $pagina;
@@ -158,23 +158,8 @@ function guardarJuego($nombre, $descripcion, $fechaLanzamiento, $imagen, $desarr
                         $consolas, $generos, $trailer)
 {
     $conexion = abrirConexion();
-    
-// $sql = "INSERT INTO juegos(:nombre, :id_genero, :poster, :puntuacion, :fecha_lanzamiento, :empresa, :visualizaciones, :url_video, :resumen) "
-   //         . "VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10])";
-    
     $sql = "INSERT INTO juegos(nombre, id_genero, poster, fecha_lanzamiento, empresa, url_video, resumen) "
             . "VALUES (:nombre, :generos, :imagen, :fechaLanzamiento, :desarrollador, :trailer, :descripcion)";
-    echo('prueba');
-    echo('holis <br>');
-echo($nombre.'<br>');
-echo($descripcion.'<br>');
-echo($fechaLanzamiento.'<br>');
-echo($imagen.'<br>');
-echo($generos.'<br>');
-echo($desarrollador.'<br>');
-echo($trailer.'<br>');
-echo($consolas.'<br>');
-echo($sql);
     $conexion->consulta($sql, array(
             array("nombre", $nombre, "string"),
             array("generos", $generos, "int"),
@@ -183,8 +168,27 @@ echo($sql);
             array("desarrollador", $desarrollador, "string"),
             array("trailer", $trailer, "string"),
             array("descripcion", $descripcion, "string")));
-    echo('<br>'.$conexion->ultimoError());
     return ($conexion->ultimoIdInsert());
-    //$sentencia = $conexion->prepare($sql);
     
+}
+
+function getJuegoConMasComentarios(){
+    $conexion = abrirConexion();
+    
+    
+    $sql = "SELECT id_juego
+            FROM (
+
+            SELECT id_juego, COUNT( * ) AS c
+            FROM comentarios
+            GROUP BY id_juego
+            ORDER BY c DESC
+            LIMIT 1
+            ) AS c1";
+    
+    $conexion->consulta($sql);
+    $id = $conexion->siguienteRegistro();
+    $juego = getProducto($id["id_juego"]);
+    
+    return $juego;
 }

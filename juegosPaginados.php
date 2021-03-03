@@ -14,6 +14,11 @@ if(isset($_GET["catId"])) {
     $catId = $_COOKIE["ultimaCategoria"];
 }
 
+$categoria = getCategoria($catId);
+if(isset($categoria)){
+    setCookie('ultimaCategoria', $catId, time() + (60*60*24));
+}
+
 $pagina = 0;
 if(isset($_GET["pag"])) {
     $pagina = $_GET["pag"];
@@ -24,13 +29,11 @@ if(isset($_GET["texto"])) {
     $texto = $_GET["texto"];
 }
 
-$categoria = getCategoria($catId);
-if(isset($categoria)){
-    setCookie('ultimaCategoria', $catId, time() + (60*60*24));
-}
+$productos = getProductosDeCategoria($catId, $pagina, $texto);
+$ultimaPagina = ultimaPaginaProductos($catId, $texto);
 
 $mySmarty->assign("pagina", $pagina);
 $mySmarty->assign("categoria", $categoria);
-$mySmarty->assign("ultimaPagina", ultimaPaginaProductos($catId, $texto));
-$mySmarty->assign("productos", getProductosDeCategoria($catId, $pagina, $texto));
+$mySmarty->assign("ultimaPagina", $ultimaPagina);
+$mySmarty->assign("juegos", $productos);
 $mySmarty->display("juegos_paginados.tpl");
