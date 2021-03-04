@@ -128,14 +128,18 @@ function getProducto($id){
     return NULL;
 }
 
-function login($usuario, $clave) {
-    if ($usuario == 'admin' && $clave == 'admin') {
-        return array(
-            "usuario" => "admin",
-            "nombre" => "usuario de prueba"
-        );
-    };
-    return NULL;
+function login($email, $clave) {
+    $conexion = abrirConexion();
+    
+    $params = array(
+        array("email", $email, "string"),
+        array("password", $clave, "string")
+    );
+    
+    $sql = "SELECT alias, email FROM usuarios WHERE email LIKE :email AND password LIKE :password";
+    $conexion->consulta($sql, $params);
+    $resultado = $conexion->siguienteRegistro();
+    return $resultado;
 }
 
 function logout() {
@@ -191,4 +195,45 @@ function getJuegoConMasComentarios(){
     $juego = getProducto($id["id_juego"]);
     
     return $juego;
+}
+
+function registrarUsuario($usuario, $clave, $email){
+    $conexion = abrirConexion();
+    
+    $usuarios = getCorreosUsuarios();
+    $estaRegistrado = false;
+    foreach ($usuarios as $alias)
+    {
+        if($alias['email'] == $email)
+        {
+            $estaRegistrado = true;
+        }
+    }
+    
+    if(!$estaRegistrado)
+    {
+        $sql = "INSERT INTO usuarios(email, alias, password) VALUES (:email,:alias,:password)";
+    
+     $conexion->consulta($sql, array(
+            array("email", $email, "string"),
+            array("alias", $usuario, "string"),
+            array("password", $clave, "string")
+         ));
+        return ($conexion->ultimoIdInsert());
+    }
+    else
+    {
+        return !$estaRegistrado;
+    }
+    
+}
+
+function getCorreosUsuarios(){
+    $conexion = abrirConexion();
+    
+    $sql = "SELECT email FROM usuarios";
+    $conexion->consulta($sql);
+    $usuarios = $conexion->restantesRegistros();
+    
+    return $usuarios;
 }

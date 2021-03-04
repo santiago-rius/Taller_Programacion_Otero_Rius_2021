@@ -230,7 +230,7 @@ ul{
     text-align: right;
 }
 
-#mensaje-error{
+.mensaje-error{
     color:red;
 }
 
@@ -272,7 +272,7 @@ ul{
 #boton-ingresar{
     display: inline-block;
     border-radius: 4px;
-    background-color: rgb(255, 102, 237);
+    background-color: rgb(5, 172, 255);
     border: none;
     color: white;
     text-align: center;
@@ -280,5 +280,14 @@ ul{
     padding: 20px;
     width: 90%;
     cursor: pointer;
-    margin-top: 60%;
+    margin-top: 35%;
+    margin-bottom: 30px;
+}
+
+#porcentaje-clave{
+}
+
+#porcentaje{
+    padding: 10px;
+    font-size: 12px;
 }

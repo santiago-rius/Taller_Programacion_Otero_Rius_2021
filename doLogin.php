@@ -4,12 +4,12 @@
     ini_set('display_errors, 1');
     require_once 'datos.php';
     
-    $usuario = $_POST["usuario"];
+    $email = $_POST["email"];
     $clave = $_POST["clave"];
     
-    $usuarioLogueado = login($usuario, $clave);
+    $usuarioLogueado = login($email, $clave);
     
-    if(login($usuario, $clave)){
+    if($usuarioLogueado){
         session_start();
         $_SESSION['usuarioLogueado'] = $usuarioLogueado;
         header('location:index.php');

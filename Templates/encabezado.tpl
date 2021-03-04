@@ -22,10 +22,10 @@
                 <h3>El mejor sitio de juegos pero no anda (todavia)</h3>
                 <div id="inicioDeSesion">
                     {if ($usuarioLogueado)} 
-                    Hola, {$usuarioLogueado.nombre}<a target="_self" href="./doLogout.php"><br>Cerrar sesión</a>
+                    Hola, {$usuarioLogueado.alias}<a target="_self" href="./doLogout.php"><br>Cerrar sesión</a>
                     {else}
                     <a target="_self" href="./login.php">Inicio de sesión</a><br>
-                        <a target="_blank" href="./login.html">Registro</a>
+                        <a target="_self" href="./registro.php">Registro</a>
                     {/if}
                 </div>
             </header>
@@ -34,7 +34,7 @@
                     <div class="dropdown">
                         <button class="dropbtn">Categorías ▼</button>
                         <div class="dropdown-content">
-                          {foreach from = $categorias item=cat}
+                        {foreach from = $categorias item=cat}
                             <li><a class="categoria" catId="{$cat.id}" href="#">{$cat.nombre}</a></li>
                         {/foreach}
                         </div>
