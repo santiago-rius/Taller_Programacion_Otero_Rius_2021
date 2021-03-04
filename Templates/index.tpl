@@ -16,7 +16,7 @@
     <body>
         <div id ="page-container">
             <div class="contenedor">
-                {include file = "encabezado.tpl"}
+                {include file = "encabezado.tpl" cat=$categoria}
 
                 <div id="buscador">
                     <label for="buscar">Ingresa tu búsqueda</label>

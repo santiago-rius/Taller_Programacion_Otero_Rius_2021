@@ -35,7 +35,7 @@
                         <button class="dropbtn">Categorías ▼</button>
                         <div class="dropdown-content">
                           {foreach from = $categorias item=cat}
-                            <li><a class="categoria" catId="{$catId}" href="#">{$cat.nombre}</a></li>
+                            <li><a class="categoria" catId="{$cat.id}" href="#">{$cat.nombre}</a></li>
                         {/foreach}
                         </div>
                     </div>
