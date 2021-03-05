@@ -43,7 +43,7 @@ function guardarCategoria($nombre) {
     $sentencia->execute();
 }
 
-function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '') {
+function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '', $orden = "ASC", $por = "fecha_lanzamiento") {
     $size = 8;
     $offset = $pagina * $size;
     $conexion = abrirConexion();
@@ -55,49 +55,11 @@ function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '') {
         array("size", $size, "int")
         );
     
-    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto LIMIT :offset, :size";
+    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria 
+            AND nombre LIKE :texto LIMIT :offset, :size ";
+    //ORDER BY :por :orden
     $conexion->consulta($sql, $params);
     return $conexion->restantesRegistros();
-//    $juegos = array();
-//    if ($idCategoria == 1) {
-//        $juegos[] = array("id" => 1,
-//            "nombre" => "Overwatch",
-//            "descripcion" => "Overwatch is an online team-based game generally played as a first-person shooter. ... These modes generally are centered around sequentially securing control of points on the map, or escorting a payload between points on the map, with one team attacking while the other defends.",
-//            "precio" => "19",
-//            "imagen" => "OW_cover.jpg");
-//        $juegos[] = array("id" => 2,
-//            "nombre" => "Counter Strike",
-//            "descripcion" => "Vas a ragequitear",
-//            "precio" => "FREE",
-//            "imagen" => "no_cover.jpg");
-//        $juegos[] = array("id" => 3,
-//            "nombre" => "Paladins",
-//            "descripcion" => "Como el Overwatch pero para pobres",
-//            "precio" => "FREE",
-//            "imagen" => "no_cover.jpg");
-//        $juegos[] = array("id" => 4,
-//            "nombre" => "Call of Duty: Seoho Warfare",
-//            "descripcion" => "You will become a Oneus Stan",
-//            "precio" => "399",
-//            "imagen" => "no_cover.jpg");
-//    } else if ($idCategoria == 2) {
-//        $juegos[] = array("id" => 5,
-//            "nombre" => "The Elder Scrolls: Skyrim",
-//            "descripcion" => "Lleno de bugs pero it just works",
-//            "precio" => "15",
-//            "imagen" => "no_cover.jpg");
-//        $juegos[] = array("id" => 6,
-//            "nombre" => "The Witcher 3: The wild hunt",
-//            "descripcion" => "Best game ever 10/10",
-//            "precio" => "15",
-//            "imagen" => "no_cover.jpg");
-//        $juegos[] = array("id" => 7,
-//            "nombre" => "Cyberpunk 2077",
-//            "descripcion" => "Not worth it, esta mas roto que el Skyrim (Judy is best romance btw)",
-//            "precio" => "too much",
-//            "imagen" => "no_cover.jpg");
-//    }
-//    return $juegos;
 }
 
 function ultimaPaginaProductos($catId, $texto) {
@@ -111,6 +73,30 @@ function ultimaPaginaProductos($catId, $texto) {
     $sql = "SELECT count(*) as total FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto";
     $conexion->consulta($sql, $params);
     $size = 8;
+    $fila = $conexion->siguienteRegistro();
+    $pagina = ceil($fila["total"] / $size) - 1;
+    return $pagina;
+}
+
+
+
+
+function ultimaPaginaComentarios($juego) {
+   $conexion = abrirConexion();
+    
+    $params = array(
+        array("id", $juego, "int")
+    );
+    
+    $sql = "SELECT COUNT(*) as total
+        FROM usuarios u, comentarios c, juegos j 
+        WHERE j.id = :id
+        AND c.id_usuario = u.id 
+        AND c.id_juego =  :id
+        ORDER BY c.fecha DESC " ;
+    
+    $conexion->consulta($sql, $params);
+    $size = 5;
     $fila = $conexion->siguienteRegistro();
     $pagina = ceil($fila["total"] / $size) - 1;
     return $pagina;
@@ -195,6 +181,25 @@ function getJuegoConMasComentarios(){
     $juego = getProducto($id["id_juego"]);
     
     return $juego;
+}
+
+function getComentariosDeJuego($juego){
+    $conexion = abrirConexion();
+    
+    $params = array(
+        array("id", $juego, "int")
+    );
+    
+    $sql = "SELECT u.alias, c.puntuacion, c.texto, c.fecha 
+        FROM usuarios u, comentarios c, juegos j 
+        WHERE j.id = :id
+        AND c.id_usuario = u.id 
+        AND c.id_juego =  :id
+        ORDER BY c.fecha DESC";
+    
+    $conexion->consulta($sql, $params);
+    $resultado = $conexion->restantesRegistros();
+    return $resultado;
 }
 
 function registrarUsuario($usuario, $clave, $email){

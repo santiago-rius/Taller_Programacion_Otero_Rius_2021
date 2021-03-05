@@ -10,16 +10,18 @@
 
     $producto = getProducto($prodId);
     
-    
     $usuarioLogueado = NULL;
     if(isset($_SESSION['usuarioLogueado'])) {
         $usuarioLogueado = $_SESSION['usuarioLogueado'];
     }
     
     $categorias = getCategorias();
-        
+    
+   // $comentarios = getComentariosDeJuego($prodId);
+    
         $mySmarty = getSmarty();
         $mySmarty->assign("categorias", $categorias);
         $mySmarty->assign("producto", $producto);
         $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
         $mySmarty->display("juego.tpl");
+       

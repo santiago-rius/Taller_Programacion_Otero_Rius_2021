@@ -29,7 +29,16 @@ if(isset($_GET["texto"])) {
     $texto = $_GET["texto"];
 }
 
-$productos = getProductosDeCategoria($catId, $pagina, $texto);
+$orden = "fecha_lanzamiento";
+if(isset($_GET["orden"])) {
+    $texto = $_GET["orden"];
+}
+
+$por = "ASC";
+if(isset($_GET["por"])) {
+    $texto = $_GET["por"];
+}
+$productos = getProductosDeCategoria($catId, $pagina, $texto, $orden, $por);
 $ultimaPagina = ultimaPaginaProductos($catId, $texto);
 
 $mySmarty->assign("pagina", $pagina);

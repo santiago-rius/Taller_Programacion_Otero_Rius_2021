@@ -28,6 +28,7 @@
                 {else}
                         <h1>Producto inexistente</h1>
                 {/if}
+
             </div>
         </div>
         {include file = "footer.tpl"}   

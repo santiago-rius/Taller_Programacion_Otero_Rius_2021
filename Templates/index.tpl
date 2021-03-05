@@ -22,7 +22,16 @@
                     <label for="buscar">Ingresa tu búsqueda</label>
                     <input type="text" id="texto">
                     <input type="button" id="buscar" value="Buscar">
-                </div>
+
+                    <label for="orderbylbl">Ordenar por</label>
+                    <input list="orderby" name="orderby">
+                        <datalist id="orderby">
+                            <option id="fecha_lanzamiento" value="Lanzamiento.">
+                            <option id="puntuacion" value="Puntaje.">
+                            <option id="visualizaciones" value="Visualizaciones.">
+                        </datalist> 
+                </div> 
+
                     
                     <div id="juego-destacado">
                         {include file="juego_destacado.tpl" jueg=$juegoDestacado}

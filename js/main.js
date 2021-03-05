@@ -1,6 +1,10 @@
 var pagina = 0;
 var categoria = 1;
 var texto = "";
+var enOrden = "";
+var ordenarPor = "";
+var id = 1;
+var paginaComentarios = 0;
 
 var clave = "";
 
@@ -10,7 +14,9 @@ function cargar() {
         data: {
             catId: categoria,
             pag: pagina,
-            texto: texto
+            texto: texto,
+            orden: enOrden,
+            por: ordenarPor
         },
         dataType: "html"
     }).done(function(html){
@@ -53,36 +59,28 @@ $(document).ready(function(){
     cargar();
 });
 
-
-$(document).ready(function()
-{
-    $("#clave").on("keyup", function(){
-    var clave = $("clave").val();
-    var lyn = 0;
-    var mym = 0;
-    var l = 0;
+function cargarComentarios() {
     
-    if(clave.match(/(\D+\d)*/g))
-    {
-        lyn = 40; 
-    }
-    if(clave.match(/[A-Z]+[a-z]*/g))
-    {
-        mym = 40;
-    }
-    if(clave.length >= 10)
-    {
-        l = 40;
-    }
+    $.ajax({
+        url: "comentariosPaginados.php",
+        data: {
+            id: id,
+            pag: paginaComentarios
+        },
+        dataType: "html"
+    }).done(function(html){
+        $('#comentarios').html(html);
+        
+        $("#comentarios-ant").click(function(){
+            paginaComentarios -= 1;
+            cargarComentarios();
+        });
+        
+        $("#comentarios-sig").click(function(){
+            paginaComentarios += 1;
+            cargarComentarios(); 
+        });
+    }).fail(function(){
+        alert('Error');
     });
-});
-
-
-
-function prueba(){
-    const s = "sucess";
 }
-
-$("textodeprueba").click(function(){
-    prueba();
-})
