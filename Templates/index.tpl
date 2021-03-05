@@ -21,16 +21,21 @@
                 <div id="buscador">
                     <label for="buscar">Ingresa tu búsqueda</label>
                     <input type="text" id="texto">
-                    <input type="button" id="buscar" value="Buscar">
+                    <input type="button" id="buscar" value="Buscar" class="boton-chico">
 
-                    <label for="orderbylbl">Ordenar por</label>
-                    <input list="orderby" name="orderby">
-                        <datalist id="orderby">
-                            <option id="fecha_lanzamiento" value="Lanzamiento.">
-                            <option id="puntuacion" value="Puntaje.">
-                            <option id="visualizaciones" value="Visualizaciones.">
-                        </datalist> 
-                </div> 
+                    <div class="dropdown">
+                    <button id="ordenar-btn" class="dropbtn">Ordenar por ▼</button>
+                    <div class="dropdown-content-ordenar">
+                        <li><a class="por" por="fecha_lanzamiento" orden="ASC" href="#">Fecha de lanzamiento: menos reciente a más reciente</a></li>
+                        <li><a class="por" por="fecha_lanzamiento" orden="DESC" href="#">Fecha de lanzamiento: más reciente a menos reciente</a></li>
+                        <li><a class="por" por="puntuacion" orden="ASC" href="#">Putaje: menor a mayor</a></li>
+                        <li><a class="por" por="puntuacion" orden="DESC" href="#">Putaje: mayor a menor</a></li>
+                        <li><a class="por" por="visualizaciones" orden="ASC" href="#">Visualizaciones: menor a mayor</a></li>
+                        <li><a class="por" por="visualizaciones" orden="DESC" href="#">Visualizaciones: mayor a menor</a></li>
+                    </div>
+                </div>
+                    Mostrando: juegos ordenados por fecha de lanzamiento: mas reciente a menos reciente
+                </div>
 
                     
                     <div id="juego-destacado">

@@ -10,9 +10,16 @@ $pagina = 0;
 if(isset($_GET["pag"])) {
     $pagina = $_GET["pag"];
 }
+
+$prodId = 12;
 if(isset($_GET["id"])) {
     $prodId = $_GET["id"];
 }
+
+echo("ID: ".$prodId);
+$producto = getProducto($prodId);
+
+
 $comentarios = getComentariosDeJuego($prodId);
 $ultimaPagina = ultimaPaginaComentarios($prodId);
 

@@ -11,8 +11,11 @@
     }
     
     $categorias = getCategorias();
+    
+    $consolas  = getConsolas();
         
         $mySmarty = getSmarty();
         $mySmarty->assign("categorias", $categorias);
         $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
+        $mySmarty->assign("consolas", $consolas);
         $mySmarty->display('nuevo_juego.tpl');

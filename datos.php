@@ -43,10 +43,10 @@ function guardarCategoria($nombre) {
     $sentencia->execute();
 }
 
-function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '', $orden = "ASC", $por = "fecha_lanzamiento") {
+function getProductosDeCategoria($idCategoria, $orden, $por, $pagina=0, $texto="") {
     $size = 8;
     $offset = $pagina * $size;
-    $conexion = abrirConexion();
+    $conexion = abrirConexion();   
     
     $params = array(
         array("idCategoria", $idCategoria, "int"),
@@ -54,23 +54,22 @@ function getProductosDeCategoria($idCategoria, $pagina = 0, $texto = '', $orden 
         array("offset", $offset, "int"),
         array("size", $size, "int")
         );
-    
-    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria 
-            AND nombre LIKE :texto LIMIT :offset, :size ";
-    //ORDER BY :por :orden
+    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto ORDER BY ".$por." ".$orden." LIMIT :offset, :size";
     $conexion->consulta($sql, $params);
     return $conexion->restantesRegistros();
 }
 
-function ultimaPaginaProductos($catId, $texto) {
+function ultimaPaginaProductos($catId, $texto, $por, $orden) {
     $conexion = abrirConexion();
     
     $params = array(
         array("idCategoria", $catId, "int"),
-        array("texto", '%'.$texto.'%', "string")
+        array("texto", '%'.$texto.'%', "string"),
+        array("por", $por, "string"),
+        array("orden", $orden, "string")
         );
     
-    $sql = "SELECT count(*) as total FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto";
+    $sql = "SELECT count(*) as total FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto ORDER BY :por :orden";
     $conexion->consulta($sql, $params);
     $size = 8;
     $fila = $conexion->siguienteRegistro();
@@ -104,7 +103,7 @@ function ultimaPaginaComentarios($juego) {
 
 function getProducto($id){
     foreach (getCategorias() as $categoria){
-        foreach(getProductosDeCategoria($categoria["id"]) as $aux){
+        foreach(getTodosProductosDeCategoria($categoria["id"]) as $aux){
             if($aux["id"]== $id) {
                 return $aux;
             }
@@ -112,6 +111,18 @@ function getProducto($id){
     }
     
     return NULL;
+}
+
+function getTodosProductosDeCategoria($idCategoria) {
+    $conexion = abrirConexion();
+    
+    $params = array(
+        array("idCategoria", $idCategoria, "int")
+        );
+    
+    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria";
+    $conexion->consulta($sql, $params);
+    return $conexion->restantesRegistros();
 }
 
 function login($email, $clave) {
@@ -145,7 +156,7 @@ function getSmarty(){
 }
 
 function guardarJuego($nombre, $descripcion, $fechaLanzamiento, $imagen, $desarrollador,
-                        $consolas, $generos, $trailer)
+                        $generos, $trailer)
 {
     $conexion = abrirConexion();
     $sql = "INSERT INTO juegos(nombre, id_genero, poster, fecha_lanzamiento, empresa, url_video, resumen) "
@@ -241,4 +252,54 @@ function getCorreosUsuarios(){
     $usuarios = $conexion->restantesRegistros();
     
     return $usuarios;
+}
+
+function getConsolas(){
+    $conexion = abrirConexion();
+    
+    $sql = "SELECT * FROM consolas";
+    $conexion->consulta($sql);
+    $consolas = $conexion->restantesRegistros();
+    
+    return $consolas;
+}
+
+function guardarConsolasParaJuego($id, $consolas){
+    $conexion = abrirConexion();
+    
+    foreach ($consolas as $con)
+    {
+        $params = array(
+            array("id_juego", $id, "int"),
+            array("id_consola", $con, "int")
+        );
+        $sql = "INSERT INTO juegos_consolas(id_juego, id_consola) VALUES (:id_juego, :id_consola)";
+        $conexion->consulta($sql, $params);
+        $conexion->ultimoIdInsert();
+    }
+}
+
+function sumarVisualizacion($juego)
+{
+    $conexion = abrirConexion();
+    
+    $params = array(
+            array("id", $juego, "int"),
+        );
+    $sql = "SELECT visualizaciones FROM juegos WHERE id = :id";
+    
+    $conexion->consulta($sql, $params);
+    $visualizaciones = $conexion->siguienteRegistro();
+    echo($visualizaciones["visualizaciones"]);
+    $valor= $visualizaciones["visualizaciones"] + 1;
+    echo($visualizaciones["visualizaciones"]);
+    
+    $params2 = array(
+            array("id", $juego, "int"),
+            array("visualizaciones", $valor, "int")
+        );
+    
+    $sql2 = "UPDATE juegos SET visualizaciones = :visualizaciones WHERE id=:id";
+    
+    $conexion->consulta($sql2, $params2);
 }

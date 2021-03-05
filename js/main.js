@@ -1,9 +1,9 @@
 var pagina = 0;
 var categoria = 1;
 var texto = "";
-var enOrden = "";
-var ordenarPor = "";
-var id = 1;
+var enOrden = "ASC";
+var ordenarPor = "fecha_lanzamiento";
+var idJuego;
 var paginaComentarios = 0;
 
 var clave = "";
@@ -31,6 +31,7 @@ function cargar() {
             pagina += 1;
             cargar();
         });
+        
     }).fail(function(){
         alert('Error');
     });
@@ -40,6 +41,12 @@ $(document).ready(function(){
     $('.categoria').click(function(){
         categoria = $(this).attr('catId');
         cargar();
+    });
+    
+    $('.por').click(function(){
+       ordenarPor = $(this).attr('por');
+       enOrden = $(this).attr('orden');
+       cargar();
     });
     
     $('#buscar').click(function(){
@@ -57,6 +64,7 @@ $(document).ready(function(){
     $("#juego-destacado").html;
     
     cargar();
+    cargarComentarios();
 });
 
 function cargarComentarios() {
@@ -64,7 +72,7 @@ function cargarComentarios() {
     $.ajax({
         url: "comentariosPaginados.php",
         data: {
-            id: id,
+            id: idJuego,
             pag: paginaComentarios
         },
         dataType: "html"

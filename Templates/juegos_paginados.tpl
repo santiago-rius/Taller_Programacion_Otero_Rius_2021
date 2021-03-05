@@ -8,7 +8,7 @@
         <h3> Categoría Inexistente</h3>
 {/if}
     <div id="botones_ant_sig">
-        <button id="anterior"{if ($pagina <= 0)} disabled {/if}>Anterior</button>
-        <button id="siguiente"{if ($pagina >= $ultimaPagina)} disabled {/if}>Siguiente</button>
+        <button id="anterior"{if ($pagina <= 0)} disabled {/if} class="boton-chico">Anterior</button>
+        <button id="siguiente"{if ($pagina >= $ultimaPagina)} disabled {/if} class="boton-chico">Siguiente</button>
     </div>
 

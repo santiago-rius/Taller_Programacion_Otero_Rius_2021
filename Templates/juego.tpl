@@ -14,7 +14,7 @@
     </head>
     <body>
         {include file = "encabezado.tpl"}
-        <div class="contenedor">
+        <div class="contenedor" id>
             <div id="pagina-juego">
                 {if (isset($producto))}
                     <h1>{$producto.nombre}</h1>
@@ -22,11 +22,19 @@
                         <img src={$producto.poster} alt="Imagen"/>
                         <iframe width="600" height="390" src={$producto.url_video}></iframe>
                     </div>
-                    <p>{$producto.resumen}</p>
-                    <p>{$producto.empresa}</p>
-                    <p>{$producto.puntuacion}</p>  
+                    <div id="resumen-juego" class="info-juego">
+                        <h3>Resumen:</h3>
+                        <p>{$producto.resumen}</p>
+                    </div>
+                    <div id="desarrollador-juego" class="info-juego">
+                        <h3>Desarrollador:</h3>
+                        <p>{$producto.empresa}</p>
+                    </div>
+                    <div id="comentarios">
+                        <p>{$producto.puntuacion}</p>
+                    </div>
                 {else}
-                        <h1>Producto inexistente</h1>
+                    <h1>Producto inexistente</h1>
                 {/if}
 
             </div>

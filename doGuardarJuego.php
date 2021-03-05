@@ -11,7 +11,20 @@ $consolas =  $_POST["consolas"];
 $generos = $_POST["generos"];
 $trailer = $_POST["trailer"];
 
+
 $id = guardarJuego($nombre, $descripcion, $fechaLanzamiento, $imagen, $desarrollador,
-                        $consolas, $generos, $trailer);
+                        $generos, $trailer);
+
+echo($consolas);
+
+if($id)
+{
+    foreach($consolas as $con)
+    {
+        echo($con);
+    }
+    guardarConsolasParaJuego($id, $consolas);
+}
+
 
 //header("location:index.php");

@@ -12,31 +12,51 @@
         <div class="contenedor">
             <div id="divIngresoJuego">
                 <form action="doGuardarJuego.php" method="POST" id="ingresoJuego" enctype="multipart/form-data">
-                    Nombre:
-                    <input type="text" name="nombre" /><br>
-                    Descripción:
-                    <input type="text" name="descripcion" /><br>
-                    Fecha de lanzamiento:
-                    <input type="date" name="fechaLanzamiento"/><br>
-                     Imagen:
-                    <input type="url" name="imagen" pattern="https?://(www.)?[-a-zA-Z0-9@:%.+~#=] { 2,256 } .[a-z] { 2,4 } \b([-a-zA-Z0-9@:%+.~#?&//=]*)(.jpg|.png|.gif)"/> <br>
-                    Desarrollador:
-                    <input type="text" name="desarrollador" /><br>
-                    Lista de consolas para las que está disponible: <br>
-                        <select multiple name="consolas">
-                            {foreach from = $consolas item=con}
-                                <option value={$con.id}>{$con.nombre}</option>
+                    <h2>Ingreso de nuevo juego</h2>
+                    <table>
+                        <tr>
+                            <td align="right">Nombre:</td>
+                            <td align="left"><input type="text" name="nombre" required/></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Descripción:</td>
+                            <td align="left"><textarea id="descripcion-juego" name="descripcion" required/></textarea></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Fecha de lanzamiento:</td>
+                            <td align="left"><input type="date" name="fechaLanzamiento" required/></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Imagen:</td>
+                            <td align="left"><input type="url" name="imagen" pattern="https?://(www.)?[-a-zA-Z0-9@:%.+~#=] { 2,256 } .[a-z] { 2,4 } \b([-a-zA-Z0-9@:%+.~#?&//=]*)(.jpg|.png|.gif)" required/></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Desarrollador:</td>
+                            <td align="left"><input type="text" name="desarrollador" required/></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Lista de consolas para las que está disponible:
+                                <h6>Puede seleccionar varias usando Ctrl+click</h6></td>
+                            <td align="left"><select multiple name="consolas[]" required>
+                                {foreach from = $consolas item=con}
+                                    <option value={$con.id}>{$con.nombre}</option>
+                                {/foreach}
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Género:</td>
+                            <td align="left"><input list="generos" name="generos" required>
+                            <datalist id="generos">
+                            {foreach from = $categorias item=cat}
+                                <option value={$cat.id}>{$cat.nombre}</option>
                             {/foreach}
-                        </select> <br>
-                    Género:
-                    <input list="generos" name="generos">
-                        <datalist id="generos">
-                        {foreach from = $categorias item=cat}
-                            <option value={$cat.id}>{$cat.nombre}</option>
-                        {/foreach}
-                        </datalist> <br>
-                    URL del trailer:
-                    <input type="url" name="trailer"/><br>
+                            </datalist></td>
+                        </tr>
+                        <tr>
+                            <td align="right">URL del trailer:</td>
+                            <td align="left"><input type="url" name="trailer"/></td>
+                        </tr>
+                    </table>
                     <input type="submit" value="Guardar" />
                 </form>
             </div>

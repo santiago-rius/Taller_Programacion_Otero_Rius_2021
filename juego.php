@@ -7,8 +7,9 @@
     if(isset($_GET["id"])) {
         $prodId = $_GET["id"];
     }
-
     $producto = getProducto($prodId);
+    
+    sumarVisualizacion($prodId);
     
     $usuarioLogueado = NULL;
     if(isset($_SESSION['usuarioLogueado'])) {
@@ -17,7 +18,6 @@
     
     $categorias = getCategorias();
     
-   // $comentarios = getComentariosDeJuego($prodId);
     
         $mySmarty = getSmarty();
         $mySmarty->assign("categorias", $categorias);

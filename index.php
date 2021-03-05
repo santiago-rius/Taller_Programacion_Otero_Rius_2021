@@ -34,7 +34,6 @@ require_once 'datos.php';
     $mySmarty->assign("categorias", $categorias);
     $mySmarty->assign("juegoDestacado", $juegoDestacado);
     $mySmarty->assign("categoria", $categoria);
-    //$mySmarty->assign("juegos", $juegos);
     $mySmarty->display("index.tpl");
 
 ?>
