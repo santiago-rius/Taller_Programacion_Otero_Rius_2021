@@ -28,8 +28,8 @@
                     <div class="dropdown-content-ordenar">
                         <li><a class="por" por="fecha_lanzamiento" orden="ASC" href="#">Fecha de lanzamiento: menos reciente a más reciente</a></li>
                         <li><a class="por" por="fecha_lanzamiento" orden="DESC" href="#">Fecha de lanzamiento: más reciente a menos reciente</a></li>
-                        <li><a class="por" por="puntuacion" orden="ASC" href="#">Putaje: menor a mayor</a></li>
-                        <li><a class="por" por="puntuacion" orden="DESC" href="#">Putaje: mayor a menor</a></li>
+                        <li><a class="por" por="puntuacion" orden="ASC" href="#">Puntaje: menor a mayor</a></li>
+                        <li><a class="por" por="puntuacion" orden="DESC" href="#">Puntaje: mayor a menor</a></li>
                         <li><a class="por" por="visualizaciones" orden="ASC" href="#">Visualizaciones: menor a mayor</a></li>
                         <li><a class="por" por="visualizaciones" orden="DESC" href="#">Visualizaciones: mayor a menor</a></li>
                     </div>

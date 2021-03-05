@@ -303,3 +303,16 @@ function sumarVisualizacion($juego)
     
     $conexion->consulta($sql2, $params2);
 }
+
+function agregarComentario($usuario, $prodId, $texto, $puntaje){
+    $conexion = abrirConexion();
+    $sql = "INSERT INTO comentarios(id_usuario, id_juego, texto, fecha, puntuacion)
+            VALUES (:usuario, :prodId, :texto, CURDATE(), :puntaje)";
+    $conexion->consulta($sql, array(
+            array("usuario", $usuario, "int"),
+            array("prodId", $prodId, "int"),
+            array("texto", $texto, "string"),
+            array("puntaje", $puntaje, "int")
+            ));
+    return ($conexion->ultimoIdInsert());
+}

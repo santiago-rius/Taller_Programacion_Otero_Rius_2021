@@ -218,6 +218,7 @@ ul{
     min-height: 250px;
     border: 3px solid #ccc;
     min-width: 345px;
+    resize: none;
 }
 
 .dropbtn {
@@ -434,4 +435,39 @@ ul{
     border: 1px solid #CCCCCC;
     border-color: black;
     padding: 15px;
+}
+
+#texto-comentario{
+    display: inline-block;
+    vertical-align: top;
+    width: 95%;
+    border: 1px solid #CCCCCC;
+    margin: 6px;
+    padding: 10px;
+    border-radius: 30px;
+    resize: none;
+    height: 100px;
+
+    
+}
+#boton-comentario{
+    float: right;
+}
+
+#comentarios-juego{
+    border-top: 1px solid #CCCCCC;
+    padding-top: 50px;
+    margin: 50px;
+}
+
+#dejar-comentario{
+    margin: 50px;
+}
+
+#puntuacion{
+    width:150px;   
+}
+
+#puntuacion option{
+    width:150px;   
 }
