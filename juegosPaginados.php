@@ -39,8 +39,13 @@ if(isset($_GET["por"])) {
     $por = $_GET["por"];
 }
 
-$productos = getProductosDeCategoria($catId, $orden, $por, $pagina, $texto);
-$ultimaPagina = ultimaPaginaProductos($catId, $texto, $por, $orden);
+$consola = 1;
+if(isset($_GET["con"])){
+    $consola = $_GET["con"];
+}
+
+$productos = getProductosDeCategoria2($catId, $orden, $por, $pagina, $texto, $consola);
+$ultimaPagina = ultimaPaginaProductos2($catId, $texto, $consola);
 
 $mySmarty->assign("pagina", $pagina);
 $mySmarty->assign("categoria", $categoria);

@@ -5,6 +5,8 @@
         <meta charset="UTF-8" lang="es">
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
         <meta name="description" content="esto es una pagina web re loca">
+        <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
         {if (isset($producto))}
             <title>{$producto.nombre}</title>
         {else}
@@ -15,7 +17,7 @@
     <body>
         {include file = "encabezado.tpl"}
         <div class="contenedor" id>
-            <div id="pagina-juego">
+            <div id="pagina-juego" idJuego={$producto.id}>
                 {if (isset($producto))}
                     <h1>{$producto.nombre}</h1>
                     <div class="media">
@@ -36,7 +38,6 @@
                 {else}
                     <h1>Producto inexistente</h1>
                 {/if}
-
             </div>
         </div>
         {include file = "footer.tpl"}   

@@ -34,10 +34,24 @@
                         <li><a class="por" por="visualizaciones" orden="DESC" href="#">Visualizaciones: mayor a menor</a></li>
                     </div>
                 </div>
-                    Mostrando: juegos ordenados por fecha de lanzamiento: mas reciente a menos reciente
+                    <span>
+                    <div class="dropdown">
+                    <button id="consola-btn" class="dropbtn">Ordenar por consola ▼</button>
+                    <div class="dropdown-content-ordenar">
+                        {foreach from=$consolas item=con}
+                            <li><a class="consola" consola-nombre={$con.nombre} consola={$con.id} href="#">{$con.nombre}</a></li>
+                        {/foreach}
+                        <li><a class="consola" consola=0 consola-nombre="todas las consolas" href="#">Todas</a></li>
+                    </div>
                 </div>
-
-                    
+                    </span>
+                        <span id="mensaje-orden">
+                        Mostrando juegos ordenados por: fecha de lanzamiento ascendente
+                    </span>
+                    <span id="mensaje-consola">
+                        ; para todas las consolas
+                    </span>
+                </div>
                     <div id="juego-destacado">
                         {include file="juego_destacado.tpl" jueg=$juegoDestacado}
                     </div>

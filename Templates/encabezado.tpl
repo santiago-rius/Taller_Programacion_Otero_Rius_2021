@@ -22,7 +22,7 @@
                 <h3>El mejor sitio de juegos pero no anda (todavia)</h3>
                 <div id="inicioDeSesion">
                     {if ($usuarioLogueado)} 
-                    Hola, {$usuarioLogueado.alias}<a target="_self" href="./doLogout.php"><br>Cerrar sesión</a>
+                        Hola, {$usuarioLogueado.alias}<a target="_self" href="./doLogout.php"><br>Cerrar sesión</a>
                     {else}
                     <a target="_self" href="./login.php">Inicio de sesión</a><br>
                         <a target="_self" href="./registro.php">Registro</a>
@@ -37,13 +37,16 @@
                         {foreach from = $categorias item=cat}
                             <li><a class="categoria" catId="{$cat.id}" href="#">{$cat.nombre}</a></li>
                         {/foreach}
+                            <li><a class="categoria" catId="0" href="#">Todas</a></li>
                         </div>
                     </div>
                     <a href="index.php">Página principal</a>
                     {if ($usuarioLogueado)} 
                         <a href="./nuevoJuego.php">Nuevo Juego</a>
+                        {if $usuarioLogueado[0]==1}
+                            <a href="./revisionComentarios.php">Revisar Comentarios</a>
+                        {/if}
                     {/if}
-                    <a href="#">Contacto</a>
                 </div>
     </body>
 </html>

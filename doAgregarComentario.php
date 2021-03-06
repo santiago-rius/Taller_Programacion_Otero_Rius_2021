@@ -1,24 +1,33 @@
 <?php
 ini_set('display_errors, 1');
 require_once "datos.php";
+session_start();
 
-$textoComentario = $_POST["texto-comentario"];
+$textoComentario = $_POST["textoComentario"];
 $puntaje = $_POST["puntaje"];
+$id = $_POST["boton-agregar-comentario"];
 
 $usuarioLogueado = NULL;
 if(isset($_SESSION['usuarioLogueado'])) {
     $usuarioLogueado = $_SESSION['usuarioLogueado'];
 }
 
-$prodId = 1;
-if(isset($_GET["id"])) {
-    $prodId = $_GET["id"];
-}
-echo("usuario:" .$usuarioLogueado["id"]);
-echo("producto:".$prodId);
-agregarComentario($usuarioLogueado["id"], $prodId, $textoComentario, $puntaje);
+echo("usuario:" .$usuarioLogueado["email"]);
+echo("texto:".$textoComentario);
+echo("puntaje:".$puntaje);
+echo("id producto: ".$id);
 
-//header('location:index.php');
+//echo("<br> RESULTADO COMENTARIO: ".agregarComentario("email@mail.com", 13, "lorem ipsum xd", 5));
+//if(agregarComentario($usuarioLogueado["email"], $prodId, $textoComentario, $puntaje) == 1)
+//{
+//    header('location:index.php');
+//}
+//else{
+//    echo('error, ya ingreso un comentario este usuario');
+//}
+
+
+
     
     
     

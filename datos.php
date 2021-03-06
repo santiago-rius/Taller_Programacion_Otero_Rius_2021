@@ -43,33 +43,136 @@ function guardarCategoria($nombre) {
     $sentencia->execute();
 }
 
-function getProductosDeCategoria($idCategoria, $orden, $por, $pagina=0, $texto="") {
+function getProductosDeCategoria($idCategoria, $orden, $por, $pagina=0, $texto="", $consola=0) {
     $size = 8;
     $offset = $pagina * $size;
-    $conexion = abrirConexion();   
+    $conexion = abrirConexion();
     
-    $params = array(
-        array("idCategoria", $idCategoria, "int"),
+    if($consola==0)
+    {
+        $params = array(
         array("texto", '%'.$texto.'%', "string"),
+        array("idCategoria", $idCategoria, "int"),
         array("offset", $offset, "int"),
         array("size", $size, "int")
         );
-    $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto ORDER BY ".$por." ".$orden." LIMIT :offset, :size";
+        $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto ORDER BY ".$por." ".$orden." LIMIT :offset, :size";
+    }
+    else
+    {
+        $params = array(
+        array("idCategoria", $idCategoria, "int"),
+        array("texto", '%'.$texto.'%', "string"),
+        array("consola", $consola, "int"),
+        array("offset", $offset, "int"),
+        array("size", $size, "int")        
+        );
+        $sql = "SELECT * FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto AND id IN
+                (SELECT id_juego as id FROM juegos_consolas WHERE id_consola = :consola)
+                ORDER BY ".$por." ".$orden." LIMIT :offset, :size";
+    }
+    
     $conexion->consulta($sql, $params);
     return $conexion->restantesRegistros();
 }
 
-function ultimaPaginaProductos($catId, $texto, $por, $orden) {
+function getProductosDeCategoria2($idCategoria, $orden, $por, $pagina=0, $texto="", $consola=0) {
+    $size = 8;
+    $offset = $pagina * $size;
     $conexion = abrirConexion();
     
     $params = array(
-        array("idCategoria", $catId, "int"),
         array("texto", '%'.$texto.'%', "string"),
-        array("por", $por, "string"),
-        array("orden", $orden, "string")
+        array("offset", $offset, "int"),
+        array("size", $size, "int")
+        );
+    if($consola==0)
+    {
+        $sql2 = "";
+    }
+    else
+    {
+        $params[] = array("consola", $consola, "int");
+        $sql2 = " AND id IN (SELECT id_juego as id FROM juegos_consolas WHERE id_consola = :consola) ";
+    }    
+    if($idCategoria == 0)
+    {
+        $sql1 = "";
+    }
+    else
+    {
+        $params[] = array("idCategoria", $idCategoria, "int");
+        $sql1 = " id_genero = :idCategoria AND ";
+    }
+    
+    
+    $sql = "SELECT * FROM juegos WHERE ".$sql1." nombre LIKE :texto ".$sql2." ORDER BY ".$por." ".$orden." LIMIT :offset, :size";
+    
+    $conexion->consulta($sql, $params);
+    return $conexion->restantesRegistros();
+}
+
+function ultimaPaginaProductos($catId, $texto, $consola) {
+    $conexion = abrirConexion();
+    if($consola == 0)
+    {
+        $params = array(
+        array("idCategoria", $catId, "int"),
+        array("texto", '%'.$texto.'%', "string")
         );
     
-    $sql = "SELECT count(*) as total FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto ORDER BY :por :orden";
+        $sql = "SELECT count(*) as total FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto";
+    }
+    else
+    {
+        $params = array(
+        array("idCategoria", $catId, "int"),
+        array("texto", '%'.$texto.'%', "string"),
+        array("consola", $consola, "int")       
+        );
+        $sql = "SELECT count(*) FROM juegos WHERE id_genero = :idCategoria AND nombre LIKE :texto AND id IN
+                (SELECT id_juego as id FROM juegos_consolas WHERE id_consola = :consola)";
+    }
+    
+    $conexion->consulta($sql, $params);
+    $size = 8;
+    $fila = $conexion->siguienteRegistro();
+    $pagina = ceil($fila["total"] / $size) - 1;
+    return $pagina;
+}
+
+function ultimaPaginaProductos2($catId, $texto, $consola) {
+    $conexion = abrirConexion();
+    
+    $params = array(
+        array("texto", '%'.$texto.'%', "string")   
+        );
+    
+    if($catId == 0)
+    {
+        $sql1 = "";
+    }
+    else
+    {
+        $params[] = array("idCategoria", $catId, "int");
+        $sql1 = "id_genero = :idCategoria AND";
+    }
+    
+    if($consola == 0)
+    {
+        $sql2 = "";
+    }
+    else
+    {
+        $params[] = array("consola", $consola, "int");
+        $sql2 =  "AND id IN
+                (SELECT id_juego as id FROM juegos_consolas WHERE id_consola = :consola)";
+    }
+    
+    
+    
+    $sql = "SELECT count(*) as total FROM juegos WHERE ".$sql1." nombre LIKE :texto ".$sql2;
+    
     $conexion->consulta($sql, $params);
     $size = 8;
     $fila = $conexion->siguienteRegistro();
@@ -80,7 +183,7 @@ function ultimaPaginaProductos($catId, $texto, $por, $orden) {
 
 
 
-function ultimaPaginaComentarios($juego) {
+function ultimaPaginaComentarios($juego, $pagina=0) {
    $conexion = abrirConexion();
     
     $params = array(
@@ -194,11 +297,16 @@ function getJuegoConMasComentarios(){
     return $juego;
 }
 
-function getComentariosDeJuego($juego){
+function getComentariosDeJuego($juego, $pagina=0){
     $conexion = abrirConexion();
     
+    $size = 5;
+    $offset = $pagina * $size;
+    
     $params = array(
-        array("id", $juego, "int")
+        array("id", $juego, "int"),
+        array("offset", $offset, "int"),
+        array("size", $size, "int")
     );
     
     $sql = "SELECT u.alias, c.puntuacion, c.texto, c.fecha 
@@ -206,7 +314,8 @@ function getComentariosDeJuego($juego){
         WHERE j.id = :id
         AND c.id_usuario = u.id 
         AND c.id_juego =  :id
-        ORDER BY c.fecha DESC";
+        ORDER BY c.fecha DESC
+        LIMIT :offset, :size";
     
     $conexion->consulta($sql, $params);
     $resultado = $conexion->restantesRegistros();
@@ -290,9 +399,7 @@ function sumarVisualizacion($juego)
     
     $conexion->consulta($sql, $params);
     $visualizaciones = $conexion->siguienteRegistro();
-    echo($visualizaciones["visualizaciones"]);
     $valor= $visualizaciones["visualizaciones"] + 1;
-    echo($visualizaciones["visualizaciones"]);
     
     $params2 = array(
             array("id", $juego, "int"),
@@ -305,14 +412,90 @@ function sumarVisualizacion($juego)
 }
 
 function agregarComentario($usuario, $prodId, $texto, $puntaje){
+//    $conexion = abrirConexion();
+//    if(usuarioTieneComentarioParaJuego($usuario, $prodId) == 0)
+//    {
+//        $sql = "INSERT INTO comentarios(id_usuario, id_juego, texto, fecha, puntuacion)
+//            VALUES (:usuario, :prodId, :texto, CURDATE(), :puntaje)";
+//        $conexion->consulta($sql, array(
+//            array("usuario", $usuario, "int"),
+//            array("prodId", $prodId, "int"),
+//            array("texto", $texto, "string"),
+//            array("puntaje", $puntaje, "int")
+//            ));
+//        
+//        return ($conexion->ultimoIdInsert());
+//    }
+//    else
+//    {
+//        return false;
+//    }
+}
+
+function usuarioTieneComentarioParaJuego($usuario, $juego)
+{
+//    $conexion = abrirConexion();
+//    
+//    $idUsuario = getIdUsuario($usuario);
+//    $sql = "SELECT count(*) from comentarios WHERE id_usuario = :idUsuario AND id_juego = :idJuego";
+//    
+//    $params = array(
+//            array("idJuego", $juego, "int"),
+//            array("idUsuario", $idUsuario, "int")
+//        );
+//    $conexion->consulta($sql, $params);
+//    $ret = $conexion->siguienteRegistro();
+//    return $ret["count(*)"];
+}
+
+function getIdUsuario($email){
     $conexion = abrirConexion();
-    $sql = "INSERT INTO comentarios(id_usuario, id_juego, texto, fecha, puntuacion)
-            VALUES (:usuario, :prodId, :texto, CURDATE(), :puntaje)";
-    $conexion->consulta($sql, array(
-            array("usuario", $usuario, "int"),
-            array("prodId", $prodId, "int"),
-            array("texto", $texto, "string"),
-            array("puntaje", $puntaje, "int")
-            ));
-    return ($conexion->ultimoIdInsert());
+    
+    $sql = "SELECT id FROM usuarios WHERE email = :email";
+    
+    $params = array(
+            array("email", $email, "string")
+        );
+    
+    $conexion->consulta($sql, $params);
+    return $conexion->siguienteRegistro()["id"];
+}
+
+function usuarioEsAdmin($usuario)
+{
+    $conexion = abrirConexion();
+    $sql = "SELECT es_admin FROM usuarios WHERE email = :email";
+    $params = array(
+            array("email", $usuario["email"], "string")
+        );
+    $conexion->consulta($sql, $params);
+    $ret = $conexion->siguienteRegistro();
+    
+    if($ret["es_admin"]==1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function getComentarios(){
+    $conexion = abrirConexion();
+    $sql = "SELECT * FROM comentarios";
+    $conexion->consulta($sql);
+    return $conexion->restantesRegistros();
+}
+
+function borrarComentario($idComentario){
+    $conexion = abrirConexion();
+    $sql = "DELETE FROM comentarios
+            WHERE id = :id ";
+    
+    $params = array(
+            array("id", $idComentario, "int")
+        );
+    $conexion->consulta($sql, $params);
+    return $conexion->ultimoIdInsert();
 }

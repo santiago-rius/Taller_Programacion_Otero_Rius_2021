@@ -2,9 +2,7 @@
 <?php
     ini_set('display_errors, 1');
     require_once 'datos.php';
-?>
-
-        <?php
+    
             session_start();
             $usuarioLogueado = NULL;
             if(isset($_SESSION['usuarioLogueado'])) {

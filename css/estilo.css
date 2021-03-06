@@ -431,6 +431,10 @@ ul{
     color: #cccccc;
 }
 
+.boton-borrar-comentario{
+    margin-top: 30px;
+}
+
 #bloque-comentarios{
     border: 1px solid #CCCCCC;
     border-color: black;
@@ -470,4 +474,8 @@ ul{
 
 #puntuacion option{
     width:150px;   
+}
+
+#mensaje-orden{
+    position: inherit;
 }

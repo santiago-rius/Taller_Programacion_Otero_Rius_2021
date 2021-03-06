@@ -29,12 +29,17 @@ require_once 'datos.php';
 
     
     $juegoDestacado = getJuegoConMasComentarios();
+    $consolas = getConsolas();
     
+    if(usuarioEsAdmin($usuarioLogueado))
+    {
+        $usuarioLogueado[] = 1;
+    }
+
+    $mySmarty->assign("consolas", $consolas);
     $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
     $mySmarty->assign("categorias", $categorias);
     $mySmarty->assign("juegoDestacado", $juegoDestacado);
     $mySmarty->assign("categoria", $categoria);
     $mySmarty->display("index.tpl");
-
-?>
 
