@@ -1,8 +1,9 @@
 <div id="bloque-comentarios">
 <h3>Comentarios:</h3>
-    {include file="tarjeta_agregar_comentario.tpl" comentarios=$comentarios}
+
+    {include file="tarjeta_agregar_comentario.tpl" id_juego=$id_juego}
     <div id="comentarios-juego">
-     {foreach from=$comentarios item=com}
+    {foreach from=$comentarios item=com}
         {include file = "tarjeta_comentario.tpl" comentario=$com}
     {/foreach} 
     </div>

@@ -38,10 +38,10 @@
                     <div class="dropdown">
                     <button id="consola-btn" class="dropbtn">Ordenar por consola ▼</button>
                     <div class="dropdown-content-ordenar">
+                        <li><a class="consola" consola=0 consola-nombre="todas las consolas" href="#">Todas</a></li>
                         {foreach from=$consolas item=con}
                             <li><a class="consola" consola-nombre={$con.nombre} consola={$con.id} href="#">{$con.nombre}</a></li>
                         {/foreach}
-                        <li><a class="consola" consola=0 consola-nombre="todas las consolas" href="#">Todas</a></li>
                     </div>
                 </div>
                     </span>

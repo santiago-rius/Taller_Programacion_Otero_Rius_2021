@@ -15,6 +15,10 @@ if(isset($_GET["idJuego"])) {
     $id = $_GET["idJuego"];
 }
 
+$usuario = 1;
+if(isset($_GET["usuario"])) {
+    $usuario = $_GET["usuario"];
+}
 
 $comentarios = getComentariosDeJuego($id, $pagina);
 $ultimaPagina = ultimaPaginaComentarios($id, $pagina);
@@ -22,5 +26,6 @@ $ultimaPagina = ultimaPaginaComentarios($id, $pagina);
 $mySmarty->assign("pagina", $pagina);
 $mySmarty->assign("comentarios", $comentarios);
 $mySmarty->assign("ultimaPagina", $ultimaPagina);
+$mySmarty->assign("id_juego", $id);
 $mySmarty->display("comentarios_paginados.tpl");
 

@@ -309,7 +309,7 @@ function getComentariosDeJuego($juego, $pagina=0){
         array("size", $size, "int")
     );
     
-    $sql = "SELECT u.alias, c.puntuacion, c.texto, c.fecha 
+    $sql = "SELECT u.alias, c.puntuacion, c.texto, c.fecha
         FROM usuarios u, comentarios c, juegos j 
         WHERE j.id = :id
         AND c.id_usuario = u.id 
@@ -412,24 +412,26 @@ function sumarVisualizacion($juego)
 }
 
 function agregarComentario($usuario, $prodId, $texto, $puntaje){
-//    $conexion = abrirConexion();
-//    if(usuarioTieneComentarioParaJuego($usuario, $prodId) == 0)
-//    {
-//        $sql = "INSERT INTO comentarios(id_usuario, id_juego, texto, fecha, puntuacion)
-//            VALUES (:usuario, :prodId, :texto, CURDATE(), :puntaje)";
-//        $conexion->consulta($sql, array(
-//            array("usuario", $usuario, "int"),
-//            array("prodId", $prodId, "int"),
-//            array("texto", $texto, "string"),
-//            array("puntaje", $puntaje, "int")
-//            ));
-//        
-//        return ($conexion->ultimoIdInsert());
-//    }
-//    else
-//    {
-//        return false;
-//    }
+    $conexion = abrirConexion();
+  //  if(usuarioTieneComentarioParaJuego($usuario, $prodId) == 0)
+  //  {
+        $sql = "INSERT INTO comentarios(id_usuario, id_juego, texto, fecha, puntuacion)
+                VALUES (:usuario, :prodId, :texto, CURDATE(), :puntaje)";
+        
+        $params = array(
+            array("usuario", $usuario, "int"),
+            array("prodId", $prodId, "int"),
+            array("texto", $texto, "string"),
+            array("puntaje", $puntaje, "int")
+            );
+        $conexion->consulta($sql, $params);
+        
+        return ($conexion->ultimoIdInsert());
+    /*}
+    else
+    {
+        return false;
+    }*/
 }
 
 function usuarioTieneComentarioParaJuego($usuario, $juego)

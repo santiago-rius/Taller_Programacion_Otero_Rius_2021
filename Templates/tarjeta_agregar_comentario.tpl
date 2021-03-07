@@ -10,7 +10,6 @@
                 <option value=2>2</option>
                 <option value=1>1</option>
         </select>
-        <span>caca: {$comentarios}</span>
-        <button type="submit" id="boton-comentario" class="boton-chico"  name="boton-agregar-comentario" value="{$comentarios}">Comentar</button>
+        <button type="submit" id="boton-comentario" class="boton-chico"  name="boton-agregar-comentario" value="{$id_juego}">Comentar</button>
     </form>
 </div>

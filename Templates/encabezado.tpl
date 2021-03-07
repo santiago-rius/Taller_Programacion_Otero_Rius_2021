@@ -34,10 +34,10 @@
                     <div class="dropdown">
                         <button class="dropbtn">Categorías ▼</button>
                         <div class="dropdown-content">
+                        <li><a class="categoria" catId="0" href="#">Todas</a></li>
                         {foreach from = $categorias item=cat}
                             <li><a class="categoria" catId="{$cat.id}" href="#">{$cat.nombre}</a></li>
                         {/foreach}
-                            <li><a class="categoria" catId="0" href="#">Todas</a></li>
                         </div>
                     </div>
                     <a href="index.php">Página principal</a>

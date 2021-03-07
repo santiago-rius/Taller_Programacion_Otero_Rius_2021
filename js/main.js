@@ -80,6 +80,7 @@ $(document).ready(function () {
 
     idJuego = $("#pagina-juego").attr("idJuego");
 
+
     $("#juego-destacado").html;
 
 
@@ -181,7 +182,7 @@ function cargarComentarios() {
         url: "comentariosPaginados.php",
         data: {
             idJuego: idJuego,
-            pag: paginaComentarios
+            pag: paginaComentarios,
         },
         dataType: "html"
     }).done(function (html) {
@@ -198,6 +199,7 @@ function cargarComentarios() {
             cargarComentarios();
         });
         idJuego = $("#pagina-juego").attr("idJuego");
+
 
     }).fail(function () {
         alert('Error');

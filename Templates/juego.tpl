@@ -17,7 +17,7 @@
     <body>
         {include file = "encabezado.tpl"}
         <div class="contenedor" id>
-            <div id="pagina-juego" idJuego={$producto.id}>
+            <div id="pagina-juego" idJuego={$producto.id} >
                 {if (isset($producto))}
                     <h1>{$producto.nombre}</h1>
                     <div class="media">
