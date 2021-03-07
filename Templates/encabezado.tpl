@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    
+
     <link rel="icon" href="./img/logito_invertido.png" type="image/gif" sizes="16x16">
 
     <head>
@@ -23,41 +23,35 @@
                 <div id="inicioDeSesion">
                     {if ($usuarioLogueado)} 
                         Hola, {$usuarioLogueado.alias}<a target="_self" href="./doLogout.php"><br>Cerrar sesión</a>
-                    {else}
-                    <a target="_self" href="./login.php">Inicio de sesión</a><br>
+                        {else}
+                        <a target="_self" href="./login.php">Inicio de sesión</a><br>
                         <a target="_self" href="./registro.php">Registro</a>
                     {/if}
                 </div>
             </header>
         </div>
-                <div id="menu">
-                    <div class="dropdown">
-                        <button class="dropbtn">Categorías ▼</button>
-                        <div class="dropdown-content">
-                        
-                        {if (not $categorias && not $juego) || $juego}
-                            {foreach from = $categorias item=cat}
-                                <li><a class="categoria" catId="{$cat.id}" href="index.php">{$cat.nombre}</a></li>
-                            {/foreach}
-                            <li><a class="categoria" catId="0" href="index.php">Todas</a></li>
-                        {else}
-                            {foreach from = $categorias item=cat}
+        <div id="menu">
+            {if not $noMostrarCat}
+                <div class="dropdown">
+                    <button class="dropbtn">Categorías ▼</button>
+                    <div class="dropdown-content">
+                        {foreach from = $categorias item=cat}
                             <li><a class="categoria" catId="{$cat.id}" href="#">{$cat.nombre}</a></li>
-                        {/foreach}
-                            <li><a class="categoria" catId="0" href="#">Todas</a></li> 
-                        {/if}
-                        </div>
+                            {/foreach}
+                        <li><a class="categoria" catId="0" href="#">Todas</a></li> 
                     </div>
-                    <a href="index.php">Página principal</a>
-                    {if ($usuarioLogueado)} 
-                        <a href="./nuevoJuego.php">Nuevo Juego</a>
-                        {if $usuarioLogueado[0]==1}
-                            <a href="./revisionComentarios.php">Revisar Comentarios</a>
-                        {/if}
-                    {/if}
-                </div>
+                </div>    
+            {/if}
+
+            <a href="index.php">Página principal</a>
+            {if ($usuarioLogueado)} 
+                <a href="./nuevoJuego.php">Nuevo Juego</a>
+                {if $usuarioLogueado[0]==1}
+                    <a href="./revisionComentarios.php">Revisar Comentarios</a>
+                {/if}
+            {/if}
+        </div>
     </body>
 </html>
-  
-        
-   
+
+

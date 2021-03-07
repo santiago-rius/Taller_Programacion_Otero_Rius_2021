@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="./css/estilo.css">
     </head>
     <body>
-        {include file = "encabezado.tpl"}
+        {include file = "encabezado.tpl" noMostrarCat=true}
         <div class="contenedor">
             <form method='POST' action='./doBorrarComentario.php'>
                 <div id="comentarios-lista">

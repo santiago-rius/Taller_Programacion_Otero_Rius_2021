@@ -11,7 +11,7 @@
     </head>
     
     <body>
-        {include file = "encabezado.tpl"}
+        {include file = "encabezado.tpl" noMostrarCat=true}
         <div class="contenedor" id="background">
             {if $login == 1}
                 {include file="login.tpl"}

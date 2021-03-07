@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="./css/estilo.css">
     </head>
     <body>
-        {include file = "encabezado.tpl"}
+        {include file = "encabezado.tpl" noMostrarCat=true}
         <div class="contenedor">
             <div id="divIngresoJuego">
                 <form action="doGuardarJuego.php" method="POST" id="ingresoJuego" enctype="multipart/form-data">

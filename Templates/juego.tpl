@@ -15,9 +15,10 @@
         <link rel="stylesheet" href="./css/estilo.css">
     </head>
     <body>
-        {include file = "encabezado.tpl" juego=$producto}
+        {include file = "encabezado.tpl" juego=$producto noMostrarCat=true}
         <div class="contenedor" id>
-            <div id="pagina-juego" idJuego={$producto.id} >
+            <span hidden="true" usuario={$usuarioLogueado}></span>
+            <div id="pagina-juego" idJuego={$producto.id}>
                 {if (isset($producto))}
                     <h1>{$producto.nombre}</h1>
                     <div class="media">

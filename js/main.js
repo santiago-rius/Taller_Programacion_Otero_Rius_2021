@@ -34,6 +34,11 @@ function cargar() {
             pagina += 1;
             cargar();
         });
+        
+        $(".categoria").click(function(){
+            pagina += 0;
+            cargar();
+        });
 
     }).fail(function () {
         alert('Error');
@@ -43,6 +48,7 @@ function cargar() {
 $(document).ready(function () {
     $('.categoria').click(function () {
         categoria = $(this).attr('catId');
+        pagina = 0;
         cargar();
     });
 

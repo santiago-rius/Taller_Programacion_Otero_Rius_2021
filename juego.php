@@ -31,5 +31,6 @@
         $mySmarty->assign("errorComentario", $errorComentario);
         $mySmarty->assign("puntuacionJuego", $puntuacionJuego);
         $mySmarty->assign("consolas", $consolas);
+        $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
         $mySmarty->display("juego.tpl");
        
