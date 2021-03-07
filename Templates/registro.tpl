@@ -52,7 +52,8 @@
                 </tr>
             </table>
             <div id="porcentaje-clave">
-                <label id="porcentaje">Seguridad de la contraseña</label><br>
+                <label>La contraseña debe tener como mínimo 8 carácteres. Se recomienda usar mayúsculas, minúsculas y números.</label><br>
+                <br><label id="porcentaje">Seguridad de la contraseña</label><br>
                 <meter id="seguridad-clave" min="0" max="100"></meter><br>
             </div>
             <input id="boton-ingresar" type="submit" value="Ingresar"/>

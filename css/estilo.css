@@ -387,10 +387,12 @@ ul{
     margin-bottom: 30px;
 }
 
-#porcentaje-clave{
+#seguridad-clave{
+    width: 200px;
+    height: 20px;
 }
 
-#porcentaje{
+#porcentaje-clave{
     padding: 10px;
     font-size: 12px;
 }
