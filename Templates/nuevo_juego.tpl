@@ -54,7 +54,7 @@
                         </tr>
                         <tr>
                             <td align="right">URL del trailer:</td>
-                            <td align="left"><input type="url" name="trailer"/></td>
+                            <td align="left"><input type="url" name="trailer" value="https://www.youtube.com/embed/ScMzIvxBSi4"/></td>
                         </tr>
                     </table>
                     <input type="submit" value="Guardar" />

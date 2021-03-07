@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="./css/estilo.css">
     </head>
     <body>
-        {include file = "encabezado.tpl"}
+        {include file = "encabezado.tpl" juego=$producto}
         <div class="contenedor" id>
             <div id="pagina-juego" idJuego={$producto.id} >
                 {if (isset($producto))}
@@ -32,7 +32,38 @@
                         <h3>Desarrollador:</h3>
                         <p>{$producto.empresa}</p>
                     </div>
-                    <div id="comentarios">
+                    <div id="fecha-juego" class="info-juego">
+                        <h3>Fecha de lanzamiento:</h3>
+                        <p>{$producto.fecha_lanzamiento}</p>
+                    </div>
+                     <div id="visualizaciones-juego" class="info-juego">
+                        <h3>Número de visitas:</h3>
+                        <p>{$producto.visualizaciones}</p>
+                    </div>
+                     <div id="consolas-juego" class="info-juego">
+                        <h3>Disponible en las plataformas:</h3>
+                        <ul>
+                            {foreach from=$consolas item=consola}
+                                <li>{$consola.nombre}</li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                    <div id="puntaje-juego" class="info-juego">
+                        <h3>Puntaje:</h3>
+                        {if $puntuacionJuego == 0}
+                            <span>El juego aún no tiene puntuaciones</span>
+                        {else}
+                            <span>{$puntuacionJuego|string_format:"%.1f"}</span>
+                            {while $puntuacionJuego >= 1}
+                                &#x2605;
+                                <label hidden="true">{$puntuacionJuego--}</label>
+                            {/while}
+                            {if $puntuacionJuego >= 0.5}
+                                &#x2606;
+                            {/if}
+                        {/if}
+                    </div>
+                    <div id="comentarios" {if $errorComentario}err={$errorComentario}{/if}>
                         <p>{$producto.puntuacion}</p>
                     </div>
                 {else}

@@ -479,3 +479,17 @@ ul{
 #mensaje-orden{
     position: inherit;
 }
+
+.select-personalizado{
+    position: relative;
+    font-family: 'Montserrat', 'sans-serif';
+    text-align: center;
+}
+
+.select-personalizado select{
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}

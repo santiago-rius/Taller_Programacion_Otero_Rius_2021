@@ -16,12 +16,20 @@
         $usuarioLogueado = $_SESSION['usuarioLogueado'];
     }
     
+    $errorComentario = isset($_GET["err"]);
+    
     $categorias = getCategorias();
+    
+    $puntuacionJuego = calcularPuntuacionDeJuego($prodId);
+    $consolas = getconsolasDeJuego($prodId);
     
     
         $mySmarty = getSmarty();
         $mySmarty->assign("categorias", $categorias);
         $mySmarty->assign("producto", $producto);
         $mySmarty->assign("usuarioLogueado", $usuarioLogueado);
+        $mySmarty->assign("errorComentario", $errorComentario);
+        $mySmarty->assign("puntuacionJuego", $puntuacionJuego);
+        $mySmarty->assign("consolas", $consolas);
         $mySmarty->display("juego.tpl");
        

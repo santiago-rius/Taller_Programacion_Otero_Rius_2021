@@ -6,6 +6,7 @@ var ordenarPor = "fecha_lanzamiento";
 var idJuego = 1;
 var paginaComentarios = 0;
 var consola = 0;
+var errorComentarios = false;
 
 var clave = "";
 
@@ -79,56 +80,10 @@ $(document).ready(function () {
     });
 
     idJuego = $("#pagina-juego").attr("idJuego");
+    errorComentarios = $("#comentarios").attr("err");
 
 
     $("#juego-destacado").html;
-
-
-//    function getUrlParameter() {
-//        var sPageURL = window.location.search.substring(1),
-//                sURLVariables = sPageURL.split('?'),
-//                sParameterName,
-//                i,
-//                sParam = "id";
-//        for (i = 0; i < sURLVariables.length; i++) {
-//            sParameterName = sURLVariables[i].split('=');
-//
-//            if (sParameterName[0] === sParam) {
-//                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-//            }
-//        }
-//        return false;
-//    }
-//    ;
-//    idJuego = getUrlParameter();
-
-//    // Delete 
-//    $('.boton-borrar-comentario').click(function () {
-//        var el = this;
-//        var deleteid = $(this).data('#id_comentario');
-//
-//        var confirmalert = confirm("Are you sure?");
-//        if (confirmalert == true) {
-//            // AJAX Request
-//            $.ajax({
-//                url: 'doBorrarComentario.php',
-//                type: 'POST',
-//                data: {id_comentario: deleteid},
-//                success: function (response) {
-//                    if (response == 1) {
-//                        $(el).closest('div').fadeOut(800, function () {
-//                            $(this).remove();
-//                        });
-//                    } else {
-//                        alert('Invalid ID.');
-//                    }
-//
-//                }
-//            });
-//        }
-//
-//    });
-
 
 
     cargar();
@@ -183,6 +138,7 @@ function cargarComentarios() {
         data: {
             idJuego: idJuego,
             pag: paginaComentarios,
+            err: errorComentarios
         },
         dataType: "html"
     }).done(function (html) {
@@ -199,6 +155,7 @@ function cargarComentarios() {
             cargarComentarios();
         });
         idJuego = $("#pagina-juego").attr("idJuego");
+        errorComentarios = $("#comentarios").attr("err");
 
 
     }).fail(function () {

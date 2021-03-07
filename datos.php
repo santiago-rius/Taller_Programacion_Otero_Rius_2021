@@ -413,8 +413,8 @@ function sumarVisualizacion($juego)
 
 function agregarComentario($usuario, $prodId, $texto, $puntaje){
     $conexion = abrirConexion();
-  //  if(usuarioTieneComentarioParaJuego($usuario, $prodId) == 0)
-  //  {
+    if(usuarioTieneComentarioParaJuego($usuario, $prodId) == 0)
+    {
         $sql = "INSERT INTO comentarios(id_usuario, id_juego, texto, fecha, puntuacion)
                 VALUES (:usuario, :prodId, :texto, CURDATE(), :puntaje)";
         
@@ -427,27 +427,27 @@ function agregarComentario($usuario, $prodId, $texto, $puntaje){
         $conexion->consulta($sql, $params);
         
         return ($conexion->ultimoIdInsert());
-    /*}
+    }
     else
     {
         return false;
-    }*/
+    }
 }
 
 function usuarioTieneComentarioParaJuego($usuario, $juego)
 {
-//    $conexion = abrirConexion();
-//    
-//    $idUsuario = getIdUsuario($usuario);
-//    $sql = "SELECT count(*) from comentarios WHERE id_usuario = :idUsuario AND id_juego = :idJuego";
-//    
-//    $params = array(
-//            array("idJuego", $juego, "int"),
-//            array("idUsuario", $idUsuario, "int")
-//        );
-//    $conexion->consulta($sql, $params);
-//    $ret = $conexion->siguienteRegistro();
-//    return $ret["count(*)"];
+    $conexion = abrirConexion();
+    
+    $idUsuario = getIdUsuario($usuario);
+    $sql = "SELECT count(*) from comentarios WHERE id_usuario = :idUsuario AND id_juego = :idJuego";
+    
+    $params = array(
+            array("idJuego", $juego, "int"),
+            array("idUsuario", $usuario, "int")
+        );
+    $conexion->consulta($sql, $params);
+    $ret = $conexion->siguienteRegistro();
+    return $ret["count(*)"];
 }
 
 function getIdUsuario($email){
@@ -500,4 +500,62 @@ function borrarComentario($idComentario){
         );
     $conexion->consulta($sql, $params);
     return $conexion->ultimoIdInsert();
+}
+
+function calcularPuntuacionDeJuego($idJuego){
+    $tablaPuntajes = getPuntuacionJuego($idJuego);
+    $cantidad = 0;
+    $totalPuntos = 0;
+    foreach($tablaPuntajes as $puntaje)
+    {
+        $cantidad++;
+        $totalPuntos+=$puntaje["puntuacion"];
+    }
+    if($cantidad>0)
+    {
+        modificarPuntuacionJuego($idJuego, ($totalPuntos / $cantidad));
+        return $totalPuntos / $cantidad;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+function modificarPuntuacionJuego($idJuego, $puntaje){
+//    $conexion = abrirConexion();
+//    
+//    $params = array(
+//            array("id_juego", $idJuego, "int"),
+//            array("puntuacion", $puntaje, "int")
+//        );
+//    $sql = "SELECT puntuacion FROM comentarios WHERE id_juego = :id_juego";
+//    $conexion->consulta($sql, $params);
+//    return $conexion->restantesRegistros();
+    
+}
+
+function getPuntuacionJuego($idJuego){
+    $conexion = abrirConexion();
+    
+    $params = array(
+            array("id_juego", $idJuego, "int")
+        );
+    $sql = "SELECT puntuacion FROM comentarios WHERE id_juego = :id_juego";
+    $conexion->consulta($sql, $params);
+    return $conexion->restantesRegistros();
+}
+
+function getconsolasDeJuego($idJuego){
+    $conexion = abrirConexion();
+    
+    $params = array(
+            array("id_juego", $idJuego, "int")
+        );
+    
+    $sql = "SELECT * FROM consolas WHERE id IN (SELECT id_consola as id FROM juegos_consolas WHERE id_juego = :id_juego)";
+    $conexion->consulta($sql, $params);
+    $consolas = $conexion->restantesRegistros();
+    
+    return $consolas;
 }
