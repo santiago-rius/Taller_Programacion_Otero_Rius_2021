@@ -314,7 +314,7 @@ ul{
 }
 
 .footer-links li{
-    display: inline-block; /* elementos de la lista en horizontal */
+    display: inline-block;
 }
 
 .footer-links li a{

@@ -513,26 +513,12 @@ function calcularPuntuacionDeJuego($idJuego){
     }
     if($cantidad>0)
     {
-        modificarPuntuacionJuego($idJuego, ($totalPuntos / $cantidad));
         return $totalPuntos / $cantidad;
     }
     else
     {
         return 0;
     }
-}
-
-function modificarPuntuacionJuego($idJuego, $puntaje){
-//    $conexion = abrirConexion();
-//    
-//    $params = array(
-//            array("id_juego", $idJuego, "int"),
-//            array("puntuacion", $puntaje, "int")
-//        );
-//    $sql = "SELECT puntuacion FROM comentarios WHERE id_juego = :id_juego";
-//    $conexion->consulta($sql, $params);
-//    return $conexion->restantesRegistros();
-    
 }
 
 function getPuntuacionJuego($idJuego){

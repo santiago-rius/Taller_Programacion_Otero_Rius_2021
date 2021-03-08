@@ -16,11 +16,6 @@ if(isset($_GET["idJuego"])) {
     $id = $_GET["idJuego"];
 }
 
-//$usuario = 1;
-//if(isset($_GET["usuario"])) {
-//    $usuario = $_GET["usuario"];
-//}
-
 $usuarioLogueado = NULL;
 if(isset($_SESSION['usuarioLogueado'])) {
     $usuarioLogueado = $_SESSION['usuarioLogueado'];

@@ -12,11 +12,6 @@ if(isset($_SESSION['usuarioLogueado'])) {
     $usuarioLogueado = $_SESSION['usuarioLogueado'];
 }
 
-//echo("usuario:" .$usuarioLogueado[email]);
-//echo("texto:".$textoComentario);
-//echo("puntaje:".$puntaje);
-//echo("id producto: ".$id);
-
 $idUsuario = getIdUsuario($usuarioLogueado[email]);
 if(agregarComentario($idUsuario, $id, $textoComentario, $puntaje) != false)
 {
