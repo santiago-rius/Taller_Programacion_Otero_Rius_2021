@@ -98,6 +98,9 @@ ul{
 .juego img {
     float: left;
     width: 100px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #CCCCCC;
 }
 
 .juego {

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8" lang="es">
         <meta name="description" content="esto es una pagina web re loca">
-        <title>TBD</title>
+        <title>Login</title>
         <link rel="stylesheet" href="./css/estilo.css">
         <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" src="./js/main.js"></script>
